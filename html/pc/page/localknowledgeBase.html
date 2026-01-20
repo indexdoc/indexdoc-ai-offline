@@ -1,0 +1,2628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>响应式布局页面</title>
+    <script src="/pc/static/js/tailwind.js"></script>
+    <link rel="stylesheet" href="/pc/static/css/all.min.css">
+    <link href="/pc/static/css/fontAwesome.css" rel="stylesheet">
+    <link href="/pc/static/css/layui.css" rel="stylesheet">
+    <link href="/pc/static/css/localKnowledgeBase.css" rel="stylesheet">
+    <link rel="stylesheet" href="/pc/static/cherry-markdown/cherry-markdown.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        accent: '#FF7D00',
+                        success: '#52C41A',
+                        warning: '#FAAD14',
+                        danger: '#F5222D',
+                        dark: '#1D2129',
+                        'gray-light': '#F2F3F5',
+                        'gray-medium': '#C9CDD4',
+                        'gray-dark': '#86909C'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                },
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            /* 水平居中 */
+            justify-content: center;
+            font-size: 20px;
+            padding: 20px 10px 10px 10px;
+            color: rgb(23 23 23);
+        }
+
+        .user-info i {
+            font-size: 20px;
+        }
+
+        body {
+            /*min-height: 100vh;*/
+            background-color: #f0f2f5;
+            font-family: Helvetica, PingFang SC, Tahoma, Arial, sans-serif;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            height: 100%;
+            width: 27%;
+            min-width: 27%;
+            background-color: rgb(250 250 250);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+
+        .child-container {
+            padding-left: 20px;
+            /* 缩进 */
+        }
+
+        .expand-icon {
+            font-size: 13px;
+            /* 让图标也有 hover 效果改变颜色 */
+            transition: color 0.2s;
+        }
+
+        .expand-icon:hover {
+            color: #333;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: white;
+        }
+
+        /* 菜单项样式 */
+        .menu-item-container {
+            color: rgb(89 89 89);
+            justify-content: space-between;
+            /* 左文右箭头 */
+            display: flex;
+            padding: 2.5px 5px 2.5px 5px;
+            text-decoration: none;
+            font-size: 13px;
+            border-radius: 8px;
+            margin: 0 8px;
+            flex-direction: column;
+            direction: ltr;
+        }
+
+        /* 菜单项样式 */
+        .menu-item-container1 {
+            color: rgb(89 89 89);
+            justify-content: space-between;
+            /* 左文右箭头 */
+            display: flex;
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 8px;
+            margin: 0 6px;
+        }
+
+        .local-dir {
+            color: rgb(89 89 89);
+            background-color: rgb(244 244 244);
+            display: flex;
+            align-items: center;
+            /* 水平居中 */
+            justify-content: center;
+            padding: 5px 0;
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 2px solid rgb(212 212 212);
+            margin: 0px 0px;
+        }
+
+        .new-chat {
+            color: black;
+            /* background-color: rgb(244 244 244); */
+            display: flex;
+            align-items: center;
+            /* padding: 5px 0; */
+            text-decoration: none;
+            font-size: 14px;
+            /* border-radius: 4px; */
+            margin: 5px;
+            padding-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .menu-item-container:hover {
+            color: rgb(89 89 89);
+            background-color: rgb(225 225 225);
+        }
+
+        .menu-item-container1:hover {
+            color: rgb(89 89 89);
+            background-color: rgb(225 225 225);
+        }
+
+        .menu-item-container.active {
+            color: rgb(89 89 89);
+            background-color: rgb(225 225 225);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item-container1.active {
+            color: rgb(89 89 89);
+            background-color: rgb(225 225 225);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item span {
+            display: block;
+            font-size: 14px;
+            line-height: 1.2;
+        }
+
+
+        /* 菜单项样式 */
+        .menu-item1 {
+            color: rgb(89 89 89);
+            display: flex;
+            flex-direction: column;
+            /* 图标在上，文字在下 */
+            align-items: center;
+            /* 水平居中 */
+            justify-content: center;
+            padding: 5px 0;
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 8px;
+            margin: 5px;
+        }
+
+        .menu-item1:hover {
+            color: rgb(60 120 251);
+            background-color: rgb(255 255 255);
+        }
+
+        .menu-item1.active {
+            color: rgb(60 120 251);
+            background-color: rgb(255 255 255);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item1 .layui-icon {
+            font-size: 15px;
+            margin-bottom: 8px;
+            /* 图标与文字之间留点空隙 */
+        }
+
+        .menu-item1 span {
+            display: block;
+            font-size: 11px;
+            line-height: 1.2;
+        }
+
+        /* 功能按钮样式 */
+        .nav-button {
+            padding: 8px 12px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-button:hover::after {
+            content: attr(data-title);
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        /* 聊天气泡的基础样式 */
+        .chat-message {
+            margin-bottom: 12px;
+            display: flex;
+            width: 100%;
+        }
+
+        /* 用户气泡靠右 */
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+
+        .chat-message.user .bubble {
+            background-color: #009688;
+            color: #fff;
+            border-radius: 8px 8px 0 8px;
+            max-width: 60%;
+            padding: 10px 14px;
+            line-height: 1.6;
+            position: relative;
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        /* AI 气泡靠左 */
+        .chat-message.ai {
+            justify-content: flex-start;
+            flex-direction: column;
+        }
+
+        .layui-textarea:focus {
+            border-color: rgb(234 237 241);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-message.ai .bubble {
+            max-width: 90%;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .markdown-body {
+            border-radius: 8px 8px 8px 0;
+        }
+
+        /* 用户气泡点击时变为可编辑 */
+        .bubble.editable {
+            outline: 1px dashed #ff9800;
+        }
+
+        .content {}
+
+        /* 聊天记录区域：自动撑满剩余空间，可滚动 */
+        #chat-messages {
+            flex: 1;
+            /* 占用 .content 剩余所有空间 */
+            overflow-y: auto;
+            /* 内容超出时出现滚动条 */
+            padding-right: 8px;
+            /* 给点右侧留白，防止滚到底时遮挡滚动条 */
+        }
+
+        /* 输入框容器：固定高度，不会随内容增长而占据聊天区空间 */
+        #input-container {
+            flex: 0 0 auto;
+            /* 固定高度，不拉伸 */
+            background: #fff;
+            /* 或和页面背景一致 */
+            padding: 10px 0;
+        }
+
+        /* 下面的 .layui-form、.layui-textarea 样式保持不变，或者根据需要微调 */
+        .layui-textarea {
+            resize: none;
+            /* 禁止用户自由拖拽调整大小，否则可能会打乱布局 */
+            height: 60px;
+            /* 设置一个合适的默认高度 */
+        }
+
+        .cherry-detail details summary {
+            user-select: none;
+            padding: 5px 10px;
+            background-color: rgb(250 250 250);
+            color: rgb(63 74 86);
+            border-radius: 8px;
+        }
+
+        .cherry.theme__light .cherry-previewer {
+            background-color: rgb(255, 255, 255);
+            border-radius: 15px;
+            min-height: 60px
+        }
+
+        .cherry {
+            border-radius: 15px;
+        }
+
+        .cherry-markdown a {
+            color: #3771cb;
+            font-size: 14px;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .cherry-markdown a:hover {
+            color: #3771cb;
+            font-size: 14px;
+            position: relative;
+            text-decoration: none;
+        }
+
+        #resizer {
+            width: 3px;
+            cursor: ew-resize;
+            background-color: transparent;
+            /* 可改为半透明以便可见 */
+            z-index: 1001;
+        }
+
+        /* 按钮 css*/
+        .layui-form-radio>.lay-skin-checkcard,
+        .layui-form-checkbox>.lay-skin-checkcard {
+            display: flex;
+            padding: 12px;
+            white-space: normal;
+            border-radius: 10px;
+            border: 1px solid #e5e5e5;
+            color: rgb(60 120 251);
+            background-color: #fff;
+        }
+
+        .layui-form-radio>.lay-skin-checkcard>*,
+        .layui-form-checkbox>.lay-skin-checkcard>* {
+            vertical-align: top;
+        }
+
+        /* 悬停 */
+        .layui-form-radio:hover>.lay-skin-checkcard,
+        .layui-form-checkbox:hover>.lay-skin-checkcard {
+            border-color: rgb(60 120 251);
+        }
+
+        /* 选中 */
+        .layui-form-radioed[lay-skin="none"]>.lay-skin-checkcard,
+        .layui-form-checkbox>.layui-form-checked>.lay-skin-checkcard {
+            color: rgb(60 120 251);
+            border-color: rgb(60 120 251);
+            background-color: rgba(60, 120, 251, 0.1) !important;
+        }
+
+        /* 禁用 */
+        .layui-radio-disabled>.lay-skin-checkcard,
+        .layui-checkbox-disabled>.lay-skin-checkcard {
+            box-shadow: none;
+            border-color: #e5e5e5 !important;
+            background-color: #eee !important;
+        }
+
+        /* 布局细节 */
+
+        .lay-skin-checkcard-detail {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .lay-skin-checkcard-description {
+            font-size: 13px;
+            /*color: rgb(63 74 86);*/
+        }
+
+        .layui-disabled .lay-skin-checkcard-description {
+            color: #c2c2c2 !important;
+        }
+
+        /* 选中角标 dot */
+        .layui-form-radioed>.lay-check-dot:after,
+        .layui-form-checkbox>.layui-form-checked>.lay-check-dot:after {
+            position: absolute;
+            content: "";
+            top: 2px;
+            right: 2px;
+            width: 0;
+            height: 0;
+            border-width: 10px;
+            border-style: dashed;
+            border-color: transparent;
+            border-top-color: rgb(60 120 251);
+            border-top-style: solid;
+            border-right-color: rgb(60 120 251);
+            border-right-style: solid;
+            border-top-left-radius: 0;
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 6px;
+        }
+
+        /* 选中对勾 dot-2 */
+        .layui-form-radioed>.lay-check-dot-2:before,
+        .layui-form-checkbox>.layui-form-checked>.lay-check-dot-2:before {
+            position: absolute;
+            font-family: "layui-icon";
+            content: "\e605";
+            color: #fff;
+            bottom: 4px;
+            right: 3px;
+            font-size: 9px;
+            z-index: 12;
+        }
+
+        .layui-form-radioed>.lay-check-dot-2:after,
+        .layui-form-checkbox>.layui-form-checked>.lay-check-dot-2:after {
+            position: absolute;
+            content: "";
+            bottom: 2px;
+            right: 2px;
+            width: 0;
+            height: 0;
+            border-width: 10px;
+            border-style: dashed;
+            border-color: transparent;
+            border-bottom-color: rgb(60 120 251);
+            border-bottom-style: solid;
+            border-right-color: rgb(60 120 251);
+            border-right-style: solid;
+            border-top-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+
+        .lay-skin-checkcard-description>.lay-check-dot-2:after {
+            color: rgb(60 120 251) !important;
+        }
+
+        .lay-skin-checkcard-description>.lay-check-dot-2:before {
+            color: rgb(60 120 251) !important;
+        }
+
+        .inline-block-item {
+            margin-right: 10px;
+        }
+
+        .inline-button {
+            display: flex;
+            padding: 12px;
+            white-space: normal;
+            border-radius: 10px;
+            border: 1px solid #e5e5e5;
+            /* color: rgb(60 120 251); */
+            background-color: #fff;
+        }
+
+        .inline-button:hover {
+            display: flex;
+            padding: 12px;
+            white-space: normal;
+            border-radius: 10px;
+            border: 1px solid rgb(60 120 251);
+            color: rgb(60 120 251);
+            background-color: rgba(60, 120, 251, 0.1);
+        }
+
+        /*历史记录css*/
+        .rightResizer {
+            width: 5px;
+            background-color: white;
+            cursor: ew-resize;
+        }
+
+        .rightSidebar {
+            min-width: 16.5%;
+            width: 20%;
+            background-color: #fff;
+            border-left: 1px solid #ddd;
+            transition: width 0.2s;
+        }
+
+        .rightSidebar1 {
+            display: none;
+            min-width: 45px;
+            background-color: #fff;
+            border-left: 1px solid #ddd;
+        }
+
+        .layui-card-header {
+            background: #f8f8f8;
+        }
+
+        .export-pdf-btn,
+        .export-word-btn,
+        .copy-btn {
+            position: relative;
+            cursor: pointer;
+            width: 16px;
+            font-size: 16px;
+            margin: 10px;
+        }
+
+        .export-pdf-btn::after,
+        .export-word-btn::after,
+        .copy-btn::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+
+        .export-pdf-btn:hover::after,
+        .export-word-btn:hover::after,
+        .copy-btn:hover::after {
+            opacity: 1;
+        }
+
+        #hisLoading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            font-size: 18px;
+            color: #333;
+        }
+
+
+        /* 页面加载时遮罩层，禁用点击 */
+        #loading-mask {
+            position: fixed;
+            z-index: 9999;
+            background: rgba(255, 255, 255, 0.5);
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        body.loading {
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .menu-item-text {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .menu-item-inner {
+            display: inline-block;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            direction: rtl;
+            /* 左侧省略 */
+            text-align: left;
+        }
+
+        .file-item-text {
+            display: inline-block;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            direction: rtl;
+            /* 左侧省略 */
+            text-align: left;
+        }
+
+
+        .file-item-inner {
+            direction: ltr;
+            unicode-bidi: plaintext;
+        }
+
+
+        /* 在 flex 容器里允许文本节点收缩，否则不出现省略号 */
+        .menu-item-container .menu-item-text,
+        .menu-item-container .file-item-text {
+            flex: 1;
+            min-width: 0;
+            /* display: block; */
+        }
+
+        .menu-item-container,
+        .file-item-text {
+            cursor: default;
+            /* 鼠标保持默认箭头 */
+            user-select: none;
+            /* 防止误选中文本，可选 */
+        }
+
+        /* 图标不挤压文本 */
+        .expand-icon {
+            flex-shrink: 0;
+        }
+
+        .layui-icon-right {
+            margin-left: auto;
+        }
+
+        .history-item:hover,
+        .history-item.active {
+            color: rgb(89 89 89);
+            background-color: rgb(225 225 225);
+            /* 改成你原来 hover 的背景色 */
+            cursor: pointer;
+        }
+
+        /* 点击历史记录时的中间对话区域的加载框样式 */
+        /* ----------------------------------------------- */
+        #content {
+            position: relative;
+        }
+
+        .content-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .content-loading .loading-spinner {
+            text-align: center;
+        }
+
+        /* 在现有<style>区域添加按钮尺寸调节样式 */
+        #spinner {
+            /* 固定高度（可选） */
+            /* height: 25px; */
+            /* 文字大小 */
+            font-size: 11.5px;
+            /* 内边距（控制按钮内部空间，间接影响大小） */
+            padding: 0px 2px;
+
+            /* 图标大小 */
+            i {
+                font-size: 11px;
+                color: #999;
+            }
+
+        }
+
+        .tooltip {
+            display: none;
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            background: #333;
+            color: #ffffff;
+            font-size: 12px;
+            white-space: nowrap;
+            /* 不换行 */
+            overflow: visible;
+            /* 超出部分显示出来 */
+            position: absolute;
+            padding: 2.5px 8px;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+
+        .progressbar-text {
+            top: 47% !important;
+        }
+
+        .tips {
+            font-size: 11.5px;
+            color: #999;
+            display: block;
+            text-align: left;
+            margin-top: 4px;
+        }
+
+        .button-wrapper {
+            display: flex;
+            justify-content: flex-start;
+            /* 水平排列按钮，左对齐 */
+            align-items: center;
+            /* 垂直居中按钮 */
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: 1px solid rgb(212 212 212);
+            outline: none;
+            padding: 8px 15px;
+            font-size: 13px;
+            background: transparent;
+            border-radius: 4px;
+        }
+
+        .search-box button {
+            background: #4285f4;
+            border: none;
+            color: white;
+            padding: 10px 18px;
+            /* border-radius: 0 30px 30px 0; */
+            cursor: pointer;
+            font-size: 16px;
+            transition: #f5f6fa 0.2s;
+        }
+
+        .search-box button:hover {
+            background: #3367d6;
+        }
+
+        .no-data {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #999;
+        }
+
+        #number_file {
+            font-size: 11.5px;
+            line-height: 1px;
+            margin-bottom: -3px;
+        }
+
+        .child-container .menu-item-inner {
+            direction: ltr !important;
+        }
+
+
+        .child-container .file-item-inner {
+            direction: rtl !important;
+        }
+
+        .child-container .file-item-text {
+            direction: unset !important;
+        }
+
+        .slider:before {
+            height: 13px;
+            width: 13px;
+            bottom: 1.5px;
+        }
+
+        a.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+            cursor: not-allowed;
+            color: #999 !important;
+            text-decoration: none !important;
+        }
+
+        /* ----------------------------------------------- */
+    </style>
+</head>
+
+<body>
+    <div id="loading-mask"></div>
+    <div style="display: flex;flex-direction: row;">
+        <!-- 侧边栏 -->
+        <aside class="sidebar" id="sidebar">
+            <nav id="kbNav" style=" margin-left: 10px; margin-right: 12px;">
+                <div id="kbTop" style="height: 105px;">
+                    <div class="user-info">
+                        <div class="layui-logo layui-hide-xs">本地文档AI助手</div>
+                    </div>
+                    <div class="user-info" style="padding: 0px 0px 5px 0px">
+                        <!-- 左占位，用 flex:1 撑开 -->
+                        <div style="width: 39%;">
+                            <div class="tips" id="expire_date"></div>
+                        </div>
+                        <!-- 右侧按钮容器 -->
+                        <div style="flex:1; display:flex; justify-content:flex-end; gap:10px;">
+                            <!-- 监测目录变化按钮 - 未激活状态 -->
+                            <!-- <button id="monitorBtn"
+                                class="flex items-center gap-1 px-3 py-1.5 rounded-md border border-[#d4d4d4] text-[#595959] hover:bg-[#e1e1e1] transition-colors">
+                                <i class="fa fa-refresh" style="margin-bottom: 1px;"></i>
+                                <span>待加载文件:</span>
+                                <span id="number_file" class="h-2" style="margin-bottom: 10px; color: gray;">
+                                    <span>0</span>
+                                </span>
+                            </button> -->
+
+                            <div class="controller-container">
+                                <div class="status-wrapper">
+                                    <span class="spinner" id="spinner">
+                                        <i class="fa fa-refresh"></i>
+                                    </span>
+                                    <span class="status-text" style="font-size: 11.5px; margin-bottom: -3px;"
+                                        id="statusText">正在加载文件：</span>
+                                    <span id="number_file">
+                                        <span>0</span>
+                                    </span>
+                                </div>
+                                <label class="switch" style="bottom: -1.5px; width: 33px; height: 17px;"
+                                    id="switchContainer">
+                                    <input type="checkbox" id="switchInput">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="local-dir" style="cursor: pointer;" onclick="getDir()">
+                        <i class="layui-icon layui-icon-addition"></i>
+                        <span>关联本地目录</span>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" placeholder="请输入文件名称搜索" id="searchInput">
+                    </div>
+                    <div class="tips">注：对文件的删除和修改的操作需要在操作系统中进行</div>
+                </div>
+                <div id="kbMenu" style="height: calc(100vh - 200px); overflow: auto; margin-top: 96px;">
+                </div>
+            </nav>
+        </aside>
+
+        <div class="resizer" id="resizer"></div>
+        <!-- 内容区域 -->
+        <div id="content" class="content"
+            style="display: flex; flex-direction: column; height: 100vh; padding: 10px;width: 100%; box-sizing: border-box; background: #ffffff;">
+            <!-- 聊天记录 -->
+            <div id="chat-messages"
+                style="flex: 1; overflow-y: auto; padding: 8px 9% 8px 10%;width: 100%;scrollbar-gutter: stable;"></div>
+
+            <!-- 输入框固定底部 -->
+            <div id="input-container" style="flex: 0 0 auto; background: #fff; padding: 10px 0;">
+                <form id="chat-form">
+                    <div class="layui-form-item layui-form-text"
+                        style="border-radius: 25px;min-height: 80px;font-size: 16px;margin: 0 8px 8px 10%;width: 80%;background-color: rgb(243 244 246);">
+                        <!--                <label class="layui-form-label" style="width: 60px; line-height: 32px; text-align: right;">提问</label>-->
+                        <div class="layui-input-block" style="margin: 0;">
+                            <textarea id="user-input" name="message" placeholder="请输入内容..."
+                                style="resize: none;border: none;background-color: rgb(243 244 246);width: 100%;border-radius: 25px;height: 85px;min-height: 85px;font-size: 16px;padding: 15px;"></textarea>
+                            <div class="btnContainer" style="display: flex;justify-content: flex-end;padding: 7px;">
+                                <button type="submit" id="send-btn" style="width: 32px; margin-right: 10px; height: 32px;
+                                    border-radius: 100px; border: none; background-color: rgb(15, 15, 15); transform: rotate(90deg);
+                                    display: flex; align-items: center; justify-content: center;">
+                                    <i class="layui-icon layui-icon-return"
+                                        style="font-size: 16px; font-weight: bold; color: white;"></i>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="rightResizer" id="rightResizer"></div>
+
+        <div class="rightSidebar" id="rightSidebar">
+            <nav id="chatNav">
+                <div id="chatTop"
+                    style="margin: 10px; display: flex; justify-content: space-between;border-bottom: 1px solid rgb(212 212 212);">
+                    <a id="newChat" class="new-chat" onclick="newChat()">
+                        <i class="layui-icon">&#xe654;</i>
+                        <span style="margin-left: 5px">开启新对话</span>
+                    </a>
+                    <a class="new-chat" onclick="spread_left()">
+                        <i class="layui-icon layui-icon-spread-left"></i>
+                    </a>
+                </div>
+
+                <a class="new-chat" style="padding-bottom: 0px;" onclick="">
+                    <i class="layui-icon" style="margin-left: 10px;">&#xe60e;</i>
+                    <span style="margin-left: 5px;">历史对话</span>
+                </a>
+
+                <div id="hisContain"
+                    style="height: calc(100vh - 110px); overflow: auto; display: flex; flex-direction: column;">
+                    <div id="hisList" style="position: relative; min-height: calc(100vh - 110px)">
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="rightSidebar1" id="rightSidebar1">
+            <nav id="listNav">
+                <div id="chatTop1" style="margin: 10px;display: flex; justify-content: right">
+                    <a class="new-chat" onclick="spread_right()">
+                        <i class="layui-icon layui-icon-shrink-right"></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <span class="tooltip"></span>
+    </div>
+
+    <script src="/pc/static/js/layui.js"></script>
+    <script src="/pc/static/js/progressbar.js"></script>
+    <script src="/pc/static/js/request.js"></script>
+    <script src="/pc/static/js/jquery-2.1.1.js"></script>
+    <script src="/pc/static/cherry-markdown/cherry-markdown.js"></script>
+    <script src="/pc/static/js/rightClick.js"></script>
+    <script>
+        let knowledge_base_id = ''
+        let document_id = ''
+        let currentMessageId = '';
+        let productId = '';
+        let edits = []
+        let edit_texts = []
+        let charge_method = {}
+        let loading = null
+        // 用于给每条消息分配唯一的 data-idx
+        let messageIndex = 0;
+        let chat_type = '知识库问答'
+        let kb_doc_id_list = [];
+        let keyword = '';
+        const statusTextEl = document.getElementById('statusText');
+        const spinnerEl = document.getElementById('spinner');
+        const switchInput = document.getElementById('switchInput');
+        const switchContainer = document.getElementById('switchContainer');
+        const numberEl = document.querySelector('#number_file span');
+        const spinner = document.querySelector('#spinner i');
+
+        switchInput.checked = true;
+
+        window.addEventListener('load', function () {
+            updateUI(STATE.LOADING);
+        })
+
+        document.addEventListener('click', function (event) {
+            let el = event.target;
+            if (el.tagName === 'A' && el.href.startsWith('openfile://')) {
+                event.preventDefault();
+                let raw = el.getAttribute('href');
+                let encodedPath = raw.slice('openfile://'.length);
+                let filePath = decodeURIComponent(encodedPath);
+                // 调用你提供的方法
+                openLocalFile(filePath);
+            }
+        }, false);
+
+        const sidebar = document.getElementById('sidebar')
+        const rightSidebar = document.getElementById('rightSidebar')
+        const resizer = document.getElementById('resizer')
+        const rightResizer = document.getElementById('rightResizer')
+        const content = document.getElementById('content')
+
+
+        let startX, startWidth
+        let startXR, startWidthR
+
+        let isReplying = false;
+        const sendBtn = document.getElementById("send-btn");
+
+
+        resizer.addEventListener('mousedown', initDrag)
+        rightResizer.addEventListener('mousedown', initDragR)
+
+
+        const STATE = {
+            PENDING: 'pending',    // 待加载
+            LOADING: 'loading',    // 加载中
+            STOPPING: 'stopping'   // 正在停止
+        };
+
+        var currentState = STATE.LOADING;
+
+        function setKbLoadingStopped() {
+            updateUI(STATE.PENDING);
+        }
+        let lastState = null; // 记录上一次状态
+
+        function updateUI(state) {
+            if (state === STATE.STOPPING && lastState === STATE.PENDING) {
+                console.log('阻止从 PENDING → STOPPING 的无效状态切换');
+                return;
+            }
+
+            // 最后更新上一次状态
+            lastState = state;
+            if (numberEl.innerText == "0") {
+                switchInput.checked = true;
+                switchContainer.classList.remove('disabled');
+                switchContainer.style.display = 'none';
+                spinnerEl.style.display = 'none';
+                return;
+            }
+            switch (state) {
+                case STATE.PENDING:
+                    statusTextEl.textContent = `待加载文件:`;
+                    switchInput.checked = false;
+                    switchContainer.classList.remove('disabled');
+                    spinnerEl.style.display = 'inline-block';
+                    spinner.classList.remove('fa-spin');
+                    break;
+                case STATE.LOADING:
+                    statusTextEl.textContent = `正在加载文件:`;
+                    switchInput.checked = true;
+                    switchContainer.classList.remove('disabled');
+                    spinnerEl.style.display = 'inline-block';
+                    spinner.classList.add('fa-spin');
+                    break;
+                case STATE.STOPPING:
+                    statusTextEl.textContent = `正在停止加载:`;
+                    // 立即反映用户意图（关闭），但禁用交互
+                    switchInput.checked = false;
+                    switchContainer.classList.add('disabled');
+                    spinnerEl.style.display = 'none';
+                    spinner.classList.remove('fa-spin');
+                    // spinner继续显示，表示后台仍在工作
+                    break;
+            }
+        }
+
+        function handleSwitchChange(event) {
+            // 如果当前正在停止，忽略任何操作并恢复UI状态
+            if (lastState === STATE.STOPPING) {
+                // 防止checkbox状态被改变
+                event.target.checked = false; // 强制保持关闭状态
+                return;
+            }
+
+            if (event.target.checked) {
+                // 用户打开了开关 -> 开始加载
+                if (numberEl.innerText != "0") {
+                    var url = '/api/knowledge/startKbLoading';
+                    $.get(url, function (result) {
+                        if (result.success) {
+                            updateUI(STATE.LOADING);
+                        }
+                    })
+                } else {
+                    layer.msg('待加载文件数为0，无需加载');
+                    switchInput.checked = false; // 恢复为关闭
+                    updateUI(STATE.PENDING); // 刷新UI
+                }
+            } else {
+                // 用户关闭了开关 -> 请求停止
+                var url = '/api/knowledge/stopKbLoading';
+                $.get(url, function (result) {
+                    if (result.success) {
+                        if (result.data == 'stopping') {
+                            updateUI(STATE.STOPPING);
+                        } else if (result.data == 'stopped') {
+                            updateUI(STATE.PENDING);
+                        }
+                    }
+                })
+            }
+        }
+
+        // 监听开关的change事件
+        switchInput.addEventListener('change', handleSwitchChange);
+
+        // 初始化UI
+        updateUI(STATE.LOADING);
+
+        const input = document.getElementById('searchInput');
+
+        // 监听输入事件（带防抖，300ms内不再输入就调用接口）
+        input.addEventListener('input', debounce(function (e) {
+            keyword = e.target.value;
+            $.ajax({
+                url: '/api/knowledge/ViewKbDoc/kbIdList?searchParams=' + JSON.stringify({ 'name': keyword }),
+                method: 'GET',
+                success: function (res) {
+                    kb_doc_id_list = JSON.parse(res.data);
+                    if (kb_doc_id_list.length > 0) {
+                        $('#kbMenu').empty();
+                        myFuncs.loadKb(0, $('#kbMenu'));
+                    } else {
+                        $('#kbMenu').empty();
+                        $('#kbMenu').append('<div class="no-data">未找到匹配数据！</div>');
+                    }
+
+                }
+            })
+        }, 300));
+
+        // 防抖函数：避免频繁触发请求
+        function debounce(fn, delay) {
+            let timer;
+            return function (...args) {
+                clearTimeout(timer);
+                timer = setTimeout(() => fn.apply(this, args), delay);
+            };
+        }
+
+        const tooltip = document.querySelector('.tooltip');
+        const kbMenu = document.getElementById('kbMenu');
+
+        // 移入
+        kbMenu.addEventListener('mouseover', (e) => {
+            const item = e.target.closest('.menu-item-container');
+            if (item) {
+                tooltip.innerText = '鼠标左键双击打开，单击选中。';
+                tooltip.style.display = 'block';
+            }
+        });
+
+        // 移出
+        kbMenu.addEventListener('mouseout', (e) => {
+            const item = e.target.closest('.menu-item-container');
+            if (item) {
+                tooltip.style.display = 'none';
+            }
+        });
+
+
+        // 禁用输入框和发送按钮的通用函数
+        function disableInput() {
+            var sendBtn = document.getElementById("send-btn");
+            var userInput = document.getElementById('user-input');
+            // ✅ 锁定输入
+            isReplying = true;
+            userInput.disabled = true;
+            sendBtn.disabled = true;
+            sendBtn.style.opacity = 0.5;
+            sendBtn.style.backgroundColor = 'rgb(214 222 232)';
+
+            // 清空输入框
+            userInput.value = '正在加载知识库，请加载完成后再向知识库提问。';
+            userInput.focus();
+            
+        }
+
+        // 启用输入框和发送按钮的通用函数
+        function enableInput() {
+            var sendBtn = document.getElementById("send-btn");
+            var userInput = document.getElementById('user-input');
+            var chatTop = document.getElementById("newChat");
+            isReplying = false;
+            userInput.disabled = false;
+            sendBtn.disabled = false;
+            sendBtn.style.opacity = 1;
+            sendBtn.style.backgroundColor = 'rgb(15, 15, 15)';
+            userInput.value = '';
+            userInput.focus();
+
+            chatTop.classList.remove('disabled');
+        }
+
+
+        function initDrag(e) {
+            startX = e.clientX
+            // 记录当前宽度（px）
+            startWidth = parseInt(document.defaultView.getComputedStyle(sidebar).width, 10)
+            // 监听全局事件，保证拖出 sidebar 区域也能继续拖拽
+            document.documentElement.addEventListener('mousemove', doDrag)
+            document.documentElement.addEventListener('mouseup', stopDrag)
+            // 取消 CSS transition，拖拽时即时响应
+            sidebar.style.transition = 'none'
+            e.preventDefault()
+        }
+
+        function doDrag(e) {
+            const delta = e.clientX - startX
+            let newWidth = startWidth + delta
+            // 限制最小和最大宽度
+            newWidth = Math.max(400, Math.min(newWidth, 800))
+            sidebar.style.width = newWidth + 'px'
+            $('#sidebar').css('min-width', newWidth + 'px')
+        }
+
+        function stopDrag(e) {
+            // 恢复 transition
+            sidebar.style.transition = 'all 0.3s'
+            document.documentElement.removeEventListener('mousemove', doDrag)
+            document.documentElement.removeEventListener('mouseup', stopDrag)
+        }
+
+        function initDragR(e) {
+            startXR = e.clientX
+            // 记录当前宽度（px）
+            startWidthR = parseInt(document.defaultView.getComputedStyle(rightSidebar).width, 10)
+            // 监听全局事件，保证拖出 sidebar 区域也能继续拖拽
+            document.documentElement.addEventListener('mousemove', doDragR)
+            document.documentElement.addEventListener('mouseup', stopDragR)
+            // 取消 CSS transition，拖拽时即时响应
+            rightSidebar.style.transition = 'none'
+            e.preventDefault()
+        }
+
+        function doDragR(e) {
+            const delta = e.clientX - startXR
+            let newWidth = startWidthR - delta
+
+            // 限制最小和最大宽度
+            newWidth = Math.max(200, Math.min(newWidth, 800))
+            $('#rightSidebar').css('min-width', newWidth + 'px')
+        }
+
+        function stopDragR(e) {
+            // 恢复 transition
+            rightSidebar.style.transition = 'all 0.3s'
+            document.documentElement.removeEventListener('mousemove', doDragR)
+            document.documentElement.removeEventListener('mouseup', stopDragR)
+        }
+
+        layui.use(['jquery', 'form'], function () {
+            var $ = layui.$;
+            var form = layui.form;
+            form.render();
+            let lastSelectedText = '';
+
+            document.addEventListener('mousedown', (e) => {
+                if (e.button === 2) {
+                    lastSelectedText = window.getSelection().toString();
+                }
+            });
+
+            const showContextMenu = (e, items) => {
+                e.preventDefault();
+                $('.custom-popup').remove();
+                const $menu = $('<div class="custom-popup"></div>').css({
+                    top: e.pageY + 'px',
+                    left: e.pageX + 'px',
+                    position: 'absolute',
+                    zIndex: 9999,
+                    background: '#fff',
+                    border: '1px solid #ccc',
+                    padding: '5px',
+                    minWidth: '120px',
+                    borderRadius: '4px',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
+                });
+
+                Object.entries(items).forEach(([label, handler]) => {
+                    const $item = $('<div class="menu-item"></div>').text(label).css({
+                        padding: '8px 12px',
+                        cursor: 'pointer'
+                    });
+                    $item.on('click', function () {
+                        handler();
+                        $('.custom-popup').remove();
+                    });
+                    $item.hover(() => $item.css('background', '#f2f2f2'), () => $item.css('background', '#fff'));
+                    $menu.append($item);
+                });
+
+                $('body').append($menu);
+            };
+
+            // 全局点击移除菜单
+            $(document).on('click', () => $('.custom-popup').remove());
+
+            // ✅ 1. 右键点击 文件/目录（移出知识库）
+            $('#kbMenu').on('contextmenu', '.menu-item-container', function (e) {
+
+                e.preventDefault();
+
+                const kbId = $(this).data('id');          // 目录 id
+                const articleId = $(this).data('article-id'); // 文件 id
+                const onloading = $(this).hasClass("onloading");
+                const isChildContainer = $(this).closest('.child-container').length > 0;  // 判断是否在 child-container 内
+
+                if (onloading) {
+                    $('#kbMenu').find('.menu-item-container.active').removeClass('active');
+                    $(this).addClass('active');
+                    if (typeof selected_kb === 'function') {
+                        selected_kb(kbId);
+                    }
+                    showContextMenu(e, {
+                        '取消加载': () => cancelLoad(knowledge_base_id),
+                    });
+                }
+                // 如果是目录
+                else if (kbId && !articleId) {
+                    // 选中目录/文件
+                    $('#kbMenu').find('.menu-item-container.active').removeClass('active');
+                    $(this).addClass('active');
+                    if (typeof selected_kb === 'function') {
+                        selected_kb(kbId);
+                    }
+
+                    const contextMenuOptions = {
+                        '打开目录': () => openDir(kbId),
+                        '刷新': () => location.reload(),
+                    };
+
+                    // 如果不在 child-container 内，添加 "移出知识库" 选项
+                    if (!isChildContainer) {
+                        contextMenuOptions['移出知识库'] = () => remove_item(knowledge_base_id, document_id);
+                    }
+
+                    showContextMenu(e, contextMenuOptions);
+                }
+                // 如果是文件
+                else if (articleId) {
+                    showContextMenu(e, {
+                        '打开': () => rightOpenFile(articleId),
+                        '刷新': () => location.reload(),
+                    });
+                }
+            });
+
+            // ✅ 2. 右键点击 kbMenu 但非菜单项（仅刷新）
+            $('#kbMenu').on('contextmenu', function (e) {
+                if (!$(e.target).closest('.menu-item-container').length) {
+                    showContextMenu(e, {
+                        '刷新': () => location.reload()
+                    });
+                }
+            });
+
+            // ✅ 3. 右键点击中间区域内容
+            $('#content').on('contextmenu', function (e) {
+                lastSelectedText = window.getSelection().toString();
+                showContextMenu(e, {
+                    // '刷新': () => location.reload(),
+                    '复制': () => {
+                        // const selection = window.getSelection().toString();
+                        if (lastSelectedText) {
+                            navigator.clipboard.writeText(lastSelectedText)
+                                .then(() => {
+                                    layer.msg('复制成功', { icon: 1, time: 1000 });
+                                })
+                                .catch(() => {
+                                    layer.alert('复制失败，请重试', { icon: 2, title: '错误' });
+                                });
+                        } else {
+                            layer.msg('请先选中要复制的内容', { icon: 0, time: 1500 });
+                        }
+                    },
+
+                    '粘贴': async () => {
+                        const input = document.getElementById('user-input');
+                        input.focus();
+
+                        // 判断浏览器是否支持 clipboard API
+                        if (navigator.clipboard && navigator.clipboard.readText) {
+                            try {
+                                const text = await navigator.clipboard.readText();
+                                if (text) {
+                                    // 获取当前光标位置
+                                    const startPos = input.selectionStart;
+                                    const endPos = input.selectionEnd;
+                                    const originalText = input.value;
+
+                                    // 在光标位置插入文本
+                                    input.value = originalText.substring(0, startPos) + text + originalText.substring(endPos);
+
+                                    // 设置新光标位置
+                                    const cursorPos = startPos + text.length;
+                                    input.selectionStart = input.selectionEnd = cursorPos;
+
+                                    layer.msg('粘贴成功', { icon: 1, time: 1000 });
+                                } else {
+                                    layer.msg('剪贴板为空', { icon: 0, time: 1500 });
+                                }
+                            } catch (err) {
+                                layer.alert('粘贴失败，页面可能限制了权限', { icon: 2 });
+                            }
+                        } else {
+                            layer.tips('请按 Ctrl + V 粘贴', input, {
+                                tips: [1, '#999'],
+                                time: 2000
+                            });
+                        }
+                    }
+
+
+                });
+            });
+
+            $('#rightSidebar').on('contextmenu', function (e) {
+                e.preventDefault();   // 阻止默认右键菜单
+                e.stopPropagation(); // 阻止冒泡（防止触发其他右键事件）
+                return false;
+            });
+
+            //-----------------------------------------------------------------------
+            /**
+             * 加载知识库目录
+             * @param {Number|String} upId 当前要查询的上级知识库ID
+             * @param {jQuery Dom} container 把本级返回结果渲染到哪一个容器里
+             */
+            async function loadKb(upId, container) {
+                container.empty(); // 清空旧内容
+                var url = '/api/knowledge/ViewKbDoc/list?searchParams=' +
+                    encodeURIComponent(JSON.stringify({ up_id: upId, kb_doc_id_list: JSON.stringify(kb_doc_id_list) }));
+
+                $.get(url, function (result) {
+                    let res = result.data;
+                    let iconList = [];
+                    if (!Array.isArray(res)) {
+                        console.error('接口返回不是数组：', res);
+                        return;
+                    }
+                    res.forEach(async function (item) {
+                        let [row, icon] = appendChildDirs(item);
+                        container.append(row);
+                        if (item.knowledge_base_id != null) {
+                            iconList.push(icon);
+                        }
+                    });
+
+                    if (kb_doc_id_list.length > 0 && keyword != '') {
+                        iconList.forEach(async function (item) {
+                            item.trigger('click');
+                        });
+                    }
+                });
+
+            }
+
+            function appendChildDirs(item) {
+                const path_ = item.name;
+                const $row = $('<div class="menu-item-container"></div>');
+                $row.attr('data-id', item.knowledge_base_id || '');
+                $row.attr('data-article-id', item.document_id || '');
+                if (item.knowledge_base_id) {
+                    // ===== 目录节点 =====
+                    const $text = $('<span class="menu-item-text"></span>').attr('title', item.name);
+                    let color = '';
+                    let kb_load_state = '';
+                    if (item.kb_load_state != '完成') {
+                        kb_load_state = ' (' + item.kb_load_state + ')';
+                        color = '#ffb800';
+                    }
+                    const $inner = $('<span class="menu-item-inner"></span>')
+                        .html(item.name + kb_load_state)
+                        .attr('kb_load_state', item.kb_load_state)
+                        .attr('title', item.name);
+                    setTextColor($inner, item.kb_load_state);
+
+                    // const $inner_inner = $('<span class="menu-item-inner-inner"></span>')
+                    //     .html(item.name + kb_load_state)
+                    //     .attr('kb_load_state', item.kb_load_state)
+                    //     .attr('title', item.name);
+                    // setTextColor($inner_inner, item.kb_load_state);
+                    // $inner.append($inner_inner);
+
+                    $text.append($inner);
+                    const $icon = $('<i class="layui-icon layui-icon-right expand-icon"></i>');
+                    $text.append($icon);
+                    $row.append($text);
+
+                    // 单击：选中目录
+                    $row.on('click', function () {
+                        // $('.menu-item-container.active').removeClass('active');
+                        $('#kbMenu').find('.menu-item-container.active').removeClass('active');
+                        $row.addClass('active');
+                        if (typeof selected_kb === 'function') {
+                            selected_kb(item.knowledge_base_id);
+                        }
+                    });
+
+                    // 双击：展开/收起（等价于点箭头）
+                    $row.on('dblclick', function () {
+                        $icon.trigger('click'); // 触发箭头的点击逻辑
+                    });
+
+                    // 保留原来的箭头点击功能
+                    $icon.on('click', function (e) {
+                        e.stopPropagation();
+                        let $childContainer = $row.next('.child-container');
+                        if ($childContainer.length === 0) {
+                            $childContainer = $('<div class="child-container" style="display: none;"></div>');
+                            $childContainer.attr('data-up-id', item.knowledge_base_id);
+                            $row.after($childContainer);
+                            loadKb(item.knowledge_base_id, $childContainer);
+                        }
+                        if ($icon.hasClass('layui-icon-right')) {
+                            $icon.removeClass('layui-icon-right').addClass('layui-icon-down');
+                        } else {
+                            $icon.removeClass('layui-icon-down').addClass('layui-icon-right');
+                        }
+                        $childContainer.slideToggle(150);
+                    });
+                    return [$row, $icon];
+                } else {
+                    // ===== 文件节点 =====
+                    let colorclass = '';
+                    let kb_load_state = '';
+                    if (item.kb_load_state != '完成') {
+                        colorclass = '#ffb800'
+                        kb_load_state = ' (' + item.kb_load_state + ')'
+                    }
+                    const $text = $('<span class="file-item-text"></span>')
+                        .attr('title', path_)
+                        .attr('document_id', item.document_id)
+                        .attr('kb_load_state', item.kb_load_state);
+
+                    // ===== 关键词高亮 =====
+                    let displayName = path_;
+                    let keyword = $('#searchInput').val();
+                    if (keyword && path_.toLowerCase().includes(keyword.toLowerCase())) {
+                        const reg = new RegExp(`(${keyword})`, 'ig');
+                        displayName = path_.replace(reg, '<span style="color: red;">$1</span>');
+                    }
+                    const $inner = $('<span class="file-item-inner"></span>')
+                        .html(displayName + kb_load_state)
+                        .attr('title', path_);
+                    setTextColor($inner, item.kb_load_state);
+                    $text.append($inner);
+                    $row.append($text);
+
+                    // 单击：选中文件，并保留父目录的选中
+                    $row.on('click', function () {
+                        // 清理所有 active
+                        // $('.menu-item-container.active').removeClass('active');
+                        $('#kbMenu').find('.menu-item-container.active').removeClass('active');
+
+                        // 给当前文件加 active
+                        $row.addClass('active');
+
+                        // 找到它的父目录，并恢复选中
+                        const $parentDir = $row.closest('.child-container').prev('.menu-item-container');
+                        if ($parentDir.length) {
+                            $parentDir.addClass('active');
+                        }
+
+                        if (typeof selected_atc === 'function') {
+                            selected_atc(item.document_id, item.up_id);
+                        }
+                    });
+
+                    // 双击：打开文件
+                    $row.on('dblclick', function () {
+                        if (path_ && !['undefined', 'null', 'none'].includes(path_.trim().toLowerCase())) {
+                            const params = encodeURIComponent(JSON.stringify({ 'document_id': item.document_id }));
+                            const url = '/api/knowledge/ViewKbDoc/list?searchParams=' + params;
+                            $.get(url, function (result) {
+                                if (result.data.length > 0) {
+                                    var url = '/api/knowledge/openFile?searchParams=' +
+                                        encodeURIComponent(JSON.stringify({ "file_path": result.data[0].location_path }));
+                                    $.get(url, function (result) {
+                                        if (result.success) {
+                                            // layer.msg(result.msg, { icon: 1 });
+                                        } else {
+                                            layer.msg(result.msg, { icon: 2 });
+                                        }
+                                    })
+                                }
+                            });
+                        }
+                    });
+                    return [$row, ''];
+                }
+
+            }
+
+            function loadWaitLoadDoc() {
+                var url = '/api/knowledge/getWaitDocNum'
+                $.get(url, function (result) {
+                    if (result.success) {
+                        changeFileNum(result.data.num);
+                    }
+                });
+            }
+
+            window.myFuncs = {
+                loadKb: loadKb,
+                loadHis: loadHis,
+                appendChildDirs: appendChildDirs
+
+            }
+
+            const chatForm = document.getElementById('chat-form');
+            const userInput = document.getElementById('user-input');
+            const chatMessages = document.getElementById('chat-messages');
+
+            chatForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                if (isReplying) {
+                    layer.msg('AI 正在回复中，请稍候...');
+                    return;
+                }
+                chat_type = '知识库问答'; // 或从 radio 获取
+                let text = userInput.value.trim();
+                if (!text) return;
+
+                // ✅ 锁定输入
+                isReplying = true;
+                userInput.disabled = true;
+                sendBtn.disabled = true;
+                sendBtn.style.opacity = 0.5;
+                sendBtn.style.backgroundColor = 'rgb(214 222 232)';
+                // 显示用户消息，创建占位
+                addUserMessage(text, chat_type);
+                // 清空输入框
+                userInput.value = '正在回答中...';
+                userInput.focus();
+
+                var newChat = document.getElementById("newChat");
+                newChat.classList.add('disabled');
+            });
+
+
+            userInput.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    if (event.ctrlKey || event.metaKey) {
+                        // 按住 Ctrl(或 Mac 上的 ⌘) + Enter → 插入换行
+                        // 在光标当前位置插入一个 '\n'
+                        const start = this.selectionStart;
+                        const end = this.selectionEnd;
+                        const value = this.value;
+                        this.value = value.slice(0, start) + '\n' + value.slice(end);
+                        // 将光标移到新行后面
+                        this.selectionStart = this.selectionEnd = start + 1;
+                        // 阻止默认（避免浏览器本身也插入换行两次）
+                        event.preventDefault();
+                    } else {
+                        // 仅按 Enter → 提交表单
+                        event.preventDefault();
+                        // 手动触发表单 submit
+                        chatForm.requestSubmit();  // 现代浏览器推荐用 requestSubmit()
+                        // 如果要兼容更老浏览器，也可以： chatForm.dispatchEvent(new Event('submit', {cancelable: true}));
+                    }
+                }
+            });
+
+            window.do_submit = function (text) {
+                chatForm.requestSubmit();
+            }
+
+            function addUserMessage(text, chat_type) {
+                const idx = messageIndex;
+                messageIndex++;
+                if (idx === 0) {
+                    addChat(sessionStorage.getItem("customer_id"), text, chat_type)
+                }
+                addHistory(currentMessageId, idx, 'user', text)
+                // 用户气泡容器
+                const userWrapper = document.createElement('div');
+                userWrapper.classList.add('chat-message', 'user');
+                userWrapper.style.display = 'flex';
+                userWrapper.style.justifyContent = 'flex-end';
+                userWrapper.style.marginBottom = '12px';
+                userWrapper.dataset.idx = idx;
+
+                // 用户气泡本体
+                const userBubble = document.createElement('div');
+                userBubble.classList.add('bubble');
+                userBubble.setAttribute('contenteditable', 'false');
+                userBubble.style.backgroundColor = 'rgb(239 246 255)';
+                userBubble.style.color = 'rgb(67 68 69)';
+                userBubble.style.borderRadius = '15px';
+                userBubble.style.padding = '10px 14px';
+                userBubble.style.maxWidth = '60%';
+                userBubble.style.wordBreak = 'break-word';
+                userBubble.style.fontSize = '16px';
+                userBubble.innerText = text;
+
+                // 点击后可编辑：用户要修改时才触发
+                userBubble.addEventListener('click', () => {
+                    userBubble.setAttribute('contenteditable', 'true');
+                    userBubble.style.outline = '1px dashed #ff9800';
+                    userBubble.focus();
+                });
+
+                // 失去焦点后，如果内容变化，就重新请求 AI
+                userBubble.addEventListener('blur', () => {
+                    userBubble.style.outline = 'none';
+                    userBubble.setAttribute('contenteditable', 'false');
+                    const newText = userBubble.innerText.trim();
+                    if (newText && newText !== text) {
+                        // 删除该用户消息后面（相同 idx）所有已存在的 AI 气泡
+                        let sibling = userWrapper.nextElementSibling;
+                        while (sibling) {
+                            const next = sibling.nextElementSibling;
+                            sibling.remove();
+                            sibling = next;
+                        }
+                        // 重新生成 AI 占位并发起新请求
+                        // addAIPlaceholder(idx);
+                        // requestAIReply(newText, idx);
+                    }
+                });
+
+                userWrapper.appendChild(userBubble);
+                chatMessages.appendChild(userWrapper);
+                let url = '/api/chat/aichat'
+                let prompt = ''
+                // 添加 AI 占位
+                addAIPlaceholder(idx);
+
+                // 滚动到底部
+                scrollToBottom();
+
+                // 触发第一次 AI 请求
+                requestWriteAIReply(text, idx, url, prompt);
+            }
+
+            function addLocalUserMessage(text, chat_type) {
+                const idx = messageIndex;
+                // 用户气泡容器
+                const userWrapper = document.createElement('div');
+                userWrapper.classList.add('chat-message', 'user');
+                userWrapper.style.display = 'flex';
+                userWrapper.style.justifyContent = 'flex-end';
+                userWrapper.style.marginBottom = '12px';
+                userWrapper.dataset.idx = idx;
+
+                // 用户气泡本体
+                const userBubble = document.createElement('div');
+                userBubble.classList.add('bubble');
+                userBubble.setAttribute('contenteditable', 'false');
+                userBubble.style.backgroundColor = 'rgb(239 246 255)';
+                userBubble.style.color = 'rgb(67 68 69)';
+                userBubble.style.borderRadius = '15px';
+                userBubble.style.padding = '10px 14px';
+                userBubble.style.maxWidth = '60%';
+                userBubble.style.wordBreak = 'break-word';
+                userBubble.style.fontSize = '16px';
+                userBubble.innerText = text;
+
+                // 点击后可编辑：用户要修改时才触发
+                userBubble.addEventListener('click', () => {
+                    userBubble.setAttribute('contenteditable', 'true');
+                    userBubble.style.outline = '1px dashed #ff9800';
+                    userBubble.focus();
+                });
+
+                // 失去焦点后，如果内容变化，就重新请求 AI
+                userBubble.addEventListener('blur', () => {
+                    userBubble.style.outline = 'none';
+                    userBubble.setAttribute('contenteditable', 'false');
+                    const newText = userBubble.innerText.trim();
+                    if (newText && newText !== text) {
+                        // 删除该用户消息后面（相同 idx）所有已存在的 AI 气泡
+                        let sibling = userWrapper.nextElementSibling;
+                        while (sibling) {
+                            const next = sibling.nextElementSibling;
+                            sibling.remove();
+                            sibling = next;
+                        }
+                        // 重新生成 AI 占位并发起新请求
+                        // addAIPlaceholder(idx);
+                        // requestAIReply(newText, idx);
+                    }
+                });
+
+                userWrapper.appendChild(userBubble);
+                chatMessages.appendChild(userWrapper);
+            }
+
+            // 给指定 idx 增加一个“AI 占位”气泡
+            function addAIPlaceholder(idx) {
+                const aiWrapper = document.createElement('div');
+                aiWrapper.classList.add('chat-message', 'ai');
+                aiWrapper.style.display = 'flex';
+                aiWrapper.style.justifyContent = 'flex-start';
+                aiWrapper.dataset.idx = idx;
+
+                const aiBubble = document.createElement('div');
+                aiBubble.classList.add('bubble');
+                aiBubble.setAttribute('contenteditable', 'false');
+                aiBubble.style.maxWidth = '90%';
+                aiBubble.style.minWidth = '60%';
+                aiBubble.style.wordBreak = 'break-word';
+                aiBubble.style.fontSize = '14px';
+
+                // 初始占位文字
+                // aiBubble.innerHTML = '<i>AI 正在思考...</i>';
+
+                aiWrapper.appendChild(aiBubble);
+                chatMessages.appendChild(aiWrapper);
+            }
+
+            function loadHis(chatList) {
+                chatMessages.innerHTML = ''
+                console.log(chatList)
+                messageIndex = 0
+                edits = []
+                chatList.forEach((item, index) => {
+                    if (item['role_name'] === 'ai') {
+                        addAIPlaceholder(messageIndex)
+                        let edit = getCurrentEdit(messageIndex)
+                        edit.setMarkdown(item['message'])
+                        addCopy(messageIndex, edit)
+                        messageIndex++
+                    } else {
+                        addLocalUserMessage(item['message'], '知识库问答')
+                    }
+                    scrollToBottom()
+                    console.log(index, item);
+                });
+
+            }
+
+            /***** SSE 版 requestAIReply *****/
+            function getCurrentEdit(idx) {
+                let edit
+                const aiWrapper = document.querySelector(`.chat-message.ai[data-idx="${idx}"]`);
+                const aiBubble = aiWrapper.querySelector('.bubble');
+                if (edits.length > idx) {
+                    edit = edits[idx]
+                    edit.setMarkdown(edit_texts[idx])
+                } else {
+                    // 重置气泡内容，然后用 Cherry-Markdown 渲染 partial
+                    aiBubble.innerHTML = '';
+                    const mdContainer = document.createElement('div');
+                    mdContainer.id = `markdown_${idx}`
+                    mdContainer.classList.add('markdown-body');
+
+                    // mdContainer.innerText = partial;
+                    aiBubble.appendChild(mdContainer);
+                    edit = new Cherry({
+                        id: `markdown_${idx}`,
+                        editor: {
+                            defaultModel: 'previewOnly',
+                        },
+                        flowSessionContext: true,
+                        toolbars: {
+                            showToolbar: false
+                        },
+                        isPreviewOnly: true,
+                        previewer: {
+                            enablePreviewerBubble: false
+                        },
+                        callback: {
+                            // 拦截 link 类型的 URL
+                            urlProcessor(url, srcType, callback) {
+                                if (url.startsWith('openfile://')) {
+                                    // 原样返回，让它生成 <a href="openfile://...">
+                                    return url;
+                                }
+                                // 其它依然走默认流程
+                                return callback(url, srcType);
+                            }
+                        },
+                        markdown: ''
+                    });
+                    edit.on('openLocalFile', openLocalFile);
+                    edits.push(edit)
+                    edit_texts.push('')
+                }
+                return edit
+            }
+
+            function getFirstLine(md_content) {
+                let firstLine = md_content.split('\n').find(line => line.trim() !== '') || 'markdown';
+                // 去掉 Markdown 标记（如 #、*、_ 等）
+                firstLine = firstLine.replace(/^#+\s*/, '').replace(/[*_`~>]/g, '').trim();
+                // 取前 10 个字符（避免太长）
+                firstLine = firstLine.slice(0, 20) || 'markdown';
+                return firstLine;
+            }
+            function addCopy(idx, edit) {
+                const aiWrapper = document.querySelector(`.chat-message.ai[data-idx="${idx}"]`);
+                const markdown_body = document.querySelector(`.chat-message.ai[data-idx="${idx}"] .cherry-previewer`);
+                const filename = getFirstLine(edit.getMarkdown());
+                // 为了使按钮在一排，创建一个新的 div 用来容纳按钮
+                const buttonWrapper = document.createElement('div');
+                buttonWrapper.classList.add('button-wrapper');
+
+                // 按钮"导出word"
+                const exportWord = document.createElement('div');
+                exportWord.classList.add('export-word-btn');
+                exportWord.innerHTML = '<i class="fa fa-file-word-o"></i>';
+                exportWord.dataset.tip = '导出word';
+                exportWord.addEventListener('click', () => {
+                    var layerIndex = layer.load(2, { shade: [0.5, '#000'] });
+                    const content = edit.getMarkdown();
+                    if (!content) return;
+                    $.ajax({
+                        url: '/api/md/mdWord',
+                        type: 'POST',
+                        data: JSON.stringify({ md_content: content }),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (result) {
+                            if (result.success) {
+                                // 把 Base64 转成 Blob
+                                const byteCharacters = atob(result.file);
+                                const byteNumbers = new Array(byteCharacters.length);
+                                for (let i = 0; i < byteCharacters.length; i++) {
+                                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                }
+                                const byteArray = new Uint8Array(byteNumbers);
+                                const blob = new Blob([byteArray], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+
+                                // 创建下载链接
+                                const link = document.createElement("a");
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = `${filename}.docx`;
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                                window.URL.revokeObjectURL(link.href);
+                                layer.close(layerIndex);
+                                layer.msg('导出成功');
+                            } else {
+                                layer.close(layerIndex);
+                                layer.msg('导出失败');
+                            }
+
+                        },
+                        error: function (xhr, status, err) {
+                            layer.close(layerIndex);
+                            layer.msg('导出失败');
+                            console.error("请求错误:", err);
+                        }
+                    });
+                })
+
+                // 按钮"导出pdf"
+                const exportPdf = document.createElement('div');
+                exportPdf.classList.add('export-pdf-btn');
+                exportPdf.innerHTML = '<i class="fa fa-file-pdf-o"></i>';
+                exportPdf.dataset.tip = '导出pdf';
+                exportPdf.addEventListener('click', () => {
+                    var layerIndex = layer.load(2, { shade: [0.5, '#000'] });
+                    const text = markdown_body.innerHTML;
+                    if (!text) return;
+                    $.ajax({
+                        url: '/api/md/mdPdf',
+                        type: 'POST',
+                        data: JSON.stringify({ html_content: text }),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (result) {
+                            if (result.success) {
+                                // 把 Base64 转成 Blob
+                                const byteCharacters = atob(result.file);
+                                const byteNumbers = new Array(byteCharacters.length);
+                                for (let i = 0; i < byteCharacters.length; i++) {
+                                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                }
+                                const byteArray = new Uint8Array(byteNumbers);
+                                const blob = new Blob([byteArray], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+
+                                // 创建下载链接
+                                const link = document.createElement("a");
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = `${filename}.pdf`;
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                                window.URL.revokeObjectURL(link.href);
+                                layer.close(layerIndex);
+                                layer.msg('导出成功');
+                            } else {
+                                layer.close(layerIndex);
+                                layer.msg('导出失败');
+                            }
+                        },
+                        error: function (xhr, status, err) {
+                            layer.close(layerIndex);
+                            layer.msg('导出失败');
+                            console.error("请求错误:", err);
+                        }
+                    });
+                })
+
+                // 按钮"复制为Markdown"
+                const copyBtn = document.createElement('div');
+                copyBtn.classList.add('copy-btn');
+                copyBtn.innerHTML = '<i class="fa fa-copy"></i>';
+                copyBtn.dataset.tip = '复制为Markdown';
+                copyBtn.addEventListener('click', () => {
+                    const text = edit.getMarkdown();
+                    if (!text) return;
+                    // 使用 Clipboard API
+                    navigator.clipboard.writeText(text).then(() => {
+                        copyBtn.dataset.tip = '已复制';
+                        setTimeout(() => {
+                            copyBtn.dataset.tip = '复制为Markdown';
+                        }, 1500);
+                    }).catch(err => {
+                        console.error('复制失败:', err);
+                        copyBtn.dataset.tip = '复制失败';
+                        setTimeout(() => {
+                            copyBtn.dataset.tip = '复制为Markdown';
+                        }, 1500);
+                    });
+                })
+
+                // 按钮"复制为文字"
+                const copyTxt = document.createElement('div');
+                copyTxt.classList.add('copy-btn');
+                copyTxt.innerHTML = '<i class="fa fa-file-text"></i>';
+                copyTxt.dataset.tip = '复制文字';
+                copyTxt.addEventListener('click', () => {
+                    const text = aiWrapper.innerText;
+                    if (!text) return;
+                    // 使用 Clipboard API
+                    navigator.clipboard.writeText(text).then(() => {
+                        copyTxt.dataset.tip = '已复制';
+                        setTimeout(() => {
+                            copyTxt.dataset.tip = '复制文字';
+                        }, 1500);
+                    }).catch(err => {
+                        console.error('复制失败:', err);
+                        copyTxt.dataset.tip = '复制失败';
+                        setTimeout(() => {
+                            copyTxt.dataset.tip = '复制文字';
+                        }, 1500);
+                    });
+                })
+
+                // 将按钮添加到 buttonWrapper 中
+                buttonWrapper.appendChild(copyBtn);
+                buttonWrapper.appendChild(exportWord);
+                buttonWrapper.appendChild(exportPdf);
+                buttonWrapper.appendChild(copyTxt);
+
+                // 将 buttonWrapper 添加到 aiWrapper 中
+                aiWrapper.appendChild(buttonWrapper);
+            }
+
+            function requestWriteAIReply(promptText, idx, u, prompt) {
+                let param = {
+                    msg: promptText,
+                    chat_type: 'kb_chat',
+                    prompt: prompt,
+                    knowledge_base_id: knowledge_base_id,
+                    task_id: '',
+                    doc_id: document_id,
+                    chat_id: currentMessageId   // ✅ 使用最新的会话ID
+                };
+                const queryString = new URLSearchParams(param).toString();
+                const aiWrapper = document.querySelector(`.chat-message.ai[data-idx="${idx}"]`);
+                const aiBubble = aiWrapper.querySelector('.bubble');
+
+                aiBubble.innerHTML = '';
+                aiBubble.removeAttribute('data-rendered');
+
+                const url = `${u}?${queryString}`;
+                const eventSource = new EventSource(url);
+                window.currentEventSource = eventSource; // ✅ 记录当前 SSE 连接，方便关闭
+
+                eventSource.onmessage = function (event) {
+                    try {
+                        const msg = JSON.parse(event.data);
+                        let edit = getCurrentEdit(idx);
+
+                        if (msg.type === 'data') {
+                            edit_texts[idx] += msg.data;
+                            edit.setMarkdown(edit_texts[idx]);
+                            scrollToBottom();
+                        } else if (msg.type === 'docs') {
+                            edit_texts[idx] += '\n\n+++ 出处\n';
+                            msg.data.forEach(doc => {
+                                edit_texts[idx] += doc + '\n';
+                            });
+                            edit_texts[idx] += '+++';
+                            edit.setMarkdown(edit_texts[idx]);
+                            scrollToBottom();
+                        } else if (msg.type === 'finish') {
+                            eventSource.close();
+                            window.currentEventSource = null; // ✅ 释放连接
+
+                            addHistory(currentMessageId, idx, 'ai', edit_texts[idx]);
+                            addCopy(idx, edit);
+
+                            if (idx === 0) {
+                                initHis(); // ✅ 新会话第一次回复后刷新历史
+                            }
+
+                            enableInput(); // ✅ 解锁输入
+                        }
+                    } catch (err) {
+                        console.error('SSE 解析错误：', err);
+                    }
+                };
+
+                eventSource.onerror = function (err) {
+                    console.error('SSE 连接出错：', err);
+                    aiBubble.innerHTML = `<span style="color: #f56c6c;">无法获取回复，请稍后重试。</span>`;
+                    try {
+                        eventSource.close();
+                    } catch (e) {
+                    }
+                    window.currentEventSource = null; // ✅ 确保断开
+                    enableInput(); // ✅ 解锁输入
+                };
+            }
+
+            async function delete_kb(id, layerIndex) {
+                if (id === '') {
+                    layer.msg('请先选中要删除的知识库')
+                    layer.close(layerIndex);
+                    return
+                }
+                let _data = { "kb_id": id }
+                let url = '/api/knowledge/removeKB'
+                $.get(url, _data, function (result) {
+
+                    if (result.success == true) {
+                        loadKb(0, $('#kbMenu'));
+                    }
+                    layer.close(layerIndex);
+                    layer.msg(result.msg);
+
+                })
+            }
+
+            async function delete_atc(kb_id, id, layerIndex) {
+                if (id === '') {
+                    layer.msg('请先选中要删除的文章')
+                    layer.close(layerIndex);
+                    return
+                }
+                let _data = { "document_id": id }
+                let url = '/api/knowledge/removeFile'
+                $.get(url, _data, function (result) {
+
+                    var $parentContainer = $('.child-container[data-up-id="' + kb_id + '"]');
+                    loadKb(kb_id, $parentContainer);
+                    layer.close(layerIndex);
+                })
+            }
+
+
+            async function rightOpenFile(document_id) {
+                const params = encodeURIComponent(JSON.stringify({ 'document_id': document_id }));
+                const url = '/api/knowledge/ViewKbDoc/list?searchParams=' + params;
+                $.get(url, function (result) {
+                    if (result.data.length > 0) {
+                        var url = '/api/knowledge/openFile?searchParams=' +
+                            encodeURIComponent(JSON.stringify({ "file_path": result.data[0].location_path }));
+                        $.get(url, function (result) {
+                            if (result.success) {
+                                // layer.msg(result.msg, { icon: 1 });
+                            } else {
+                                layer.msg(result.msg, { icon: 2 });
+                            }
+                        })
+                    }
+                });
+            }
+
+            async function remove_item(kb_id, id) {
+                if (id === '') {
+                    if (kb_id === '') {
+                        layer.msg('请先选中')
+                        return
+                    } else {
+                        var layerIndex = layer.load(2, { shade: [0.5, '#000'] });
+                        await delete_kb(kb_id, layerIndex)
+                        enableInput();
+                    }
+                } else {
+                    var layerIndex = layer.load(2, { shade: [0.5, '#000'] });
+                    await delete_atc(kb_id, id, layerIndex)
+                    enableInput();
+                }
+            }
+
+
+
+            async function openDir(knowledge_base_id) {
+                const params = encodeURIComponent(JSON.stringify({ 'knowledge_base_id': knowledge_base_id }));
+                const url = '/api/knowledge/ViewKbDoc/list?searchParams=' + params;
+                $.get(url, function (result) {
+                    if (result.data.length > 0) {
+                        var url = '/api/knowledge/openDir?searchParams=' +
+                            encodeURIComponent(JSON.stringify({ dir_path: result.data[0].location_path }));
+                        $.get(url, function (result) {
+                            if (result.success) {
+                                // layer.msg(result.msg, { icon: 1 });
+                            } else {
+                                layer.msg(result.msg, { icon: 2 });
+                            }
+                        })
+                    }
+                });
+            }
+
+
+            function cancelLoad(kb_id) {
+                var contain = $('.menu-item-container[data-id="' + kb_id + '"]');
+                contain.remove()
+                window.parent.pywebview.api.cancelTask(kb_id)
+                enableInput();
+            }
+
+            // ✅ 这里 loadKb 已经定义好了
+            async function initPage() {
+                document.body.classList.add("loading");
+                const loadingIndex = layer.load(0, {
+                    shade: [0.3, '#fff']
+                });
+
+                try {
+                    await Promise.all([
+                        loadKb(0, $('#kbMenu')),
+                        loadWaitLoadDoc(),
+                        initHis()
+                    ]);
+                } catch (e) {
+                    console.error("初始化出错:", e);
+                } finally {
+                    layer.close(loadingIndex);
+                    document.body.classList.remove("loading");
+                    const mask = document.getElementById("loading-mask");
+                    if (mask) mask.remove();
+                }
+            }
+
+            // 页面准备好就执行
+            $(document).ready(function () {
+                initPage();
+            });
+
+        });
+
+        // 滚动到底部
+        function scrollToBottom() {
+            setTimeout(scroll, 50);
+        }
+
+        function addHistory(chat_id, current_id, role_name, message) {
+            // window.parent.pywebview.api.addHistory(history_id, chat_id, current_id, role_name, message)
+            var data = new FormData();
+            data.append("chat_id", chat_id);
+            data.append("chat_index", current_id);
+            data.append("role_name", role_name);
+            data.append("message", message);
+            $.ajax({
+                url: '/api/chatHistory/addChatHistory',
+                type: 'POST',
+                data: data,
+                async: false,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+
+                },
+                error: function (xhr, status, err) {
+                    console.error("请求错误:", err);
+                }
+            });
+        }
+
+        function addChat(customer_id, chat_name, chat_type) {
+            // window.parent.pywebview.api.addChatInfo(chat_id, customer_id, chat_name, chat_type)
+            var data = new FormData();
+            data.append("customer_id", customer_id);
+            data.append("chat_name", chat_name);
+            data.append("chat_type", chat_type);
+            $.ajax({
+                url: '/api/chat/addChat',
+                type: 'POST',
+                data: data,
+                async: false,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    currentMessageId = res.data;
+                },
+                error: function (xhr, status, err) {
+                    console.error("请求错误:", err);
+                }
+            });
+        }
+
+        //加载历史记录的函数
+        async function loadHistory(chat_id) {
+            const contentEl = document.getElementById('content');
+
+            // ✅ 添加局部 loading 遮罩
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'content-loading';
+            loadingDiv.innerHTML = `
+                <div class="loading-spinner">
+                    <i class="layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop"
+                    style="font-size: 40px; color: #16baaa;"></i>
+                    <div style="margin-top: 8px; color: #666;">正在加载对话...</div>
+                </div>
+            `;
+            contentEl.appendChild(loadingDiv);
+
+            try {
+                currentMessageId = chat_id;
+
+                const res = await fetch('/api/chatHistory/chatHistoryList?chat_id=' + chat_id);
+                const data = await res.json();
+
+                document.getElementById('chat-messages').innerHTML = '';
+                messageIndex = 0;
+                edits = [];
+                edit_texts = [];
+                myFuncs.loadHis(data.data);
+            } catch (err) {
+                console.error("加载历史失败:", err);
+                layer.alert("加载历史失败", { icon: 2 });
+            } finally {
+                // ✅ 移除 loading 遮罩
+                contentEl.removeChild(loadingDiv);
+            }
+        }
+
+
+        function initHis() {
+            let container = $('#hisList');
+
+            // ✅ 只删除历史项，不删除 #hisLoading
+            container.children('.history-item').remove();
+            $.ajax({
+                url: '/api/chat/chatList?chat_type=知识库问答',
+                type: 'GET',
+                async: false,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    let rows = []
+                    res.data.forEach((item, index) => {
+                        const chatId = item['chat_id'];
+                        const chatName = item['chat_name'];
+                        const chatTime = item['create_time'].split(' ')[0];
+
+                        // 外层容器
+                        const $row = $(`
+                            <div class="menu-item-container1  history-item" style=" height: 30px; display: flex; justify-content: space-between; align-items: center; padding: 0px 8px 0px 8px; border-bottom: 0px solid #eee;">
+                                <!-- 左侧名称（最多一行显示） -->
+                                <div style="flex: 1; overflow: hidden; font-size: 13px; white-space: nowrap; text-overflow: ellipsis; cursor: pointer;">
+                                ${chatName}
+                                </div>
+                                    <!-- 右侧时间和删除按钮（固定宽度） -->
+                                    <div style="display: flex; align-items: center; flex-shrink: 0; gap: 8px; margin-left: 10px;">
+                                    <div style="color: #888; font-size: 12px; white-space: nowrap;">${chatTime}</div>
+                                    <button class="delete-btn" onclick="deleteHistory('${chatId}', this, event)" style="background: transparent; border: none; padding: 4px 8px; cursor: pointer;">
+                                        <i class="layui-icon layui-icon-delete"  style="color: #aaa; font-size:21px"></i>
+                                    </button>
+                                </div>
+                            </div>
+            `
+                        );
+
+                        $row.on("click", function () {
+                            if ($(this).hasClass("active")) {
+                                return;
+                            }
+                            $(".history-item").removeClass("active");
+                            $(this).addClass("active");
+                            loadHistory(chatId);
+                        });
+                        $('#hisList').append($row);
+                    });
+                },
+                error: function (xhr, status, err) {
+                    console.error("请求错误:", err);
+                }
+            });
+        }
+
+        async function deleteHistory(chatId, btn, event) {
+            if (event) {
+                event.stopPropagation(); // ✅ 阻止冒泡，避免触发父级的点击
+            }
+
+            layer.confirm('确定要删除该对话吗？', {
+                title: '提示',
+                icon: 3,
+                btn: ['确认', '取消']
+            }, async function (index) {
+                // const success = await window.parent.pywebview.api.deleteChat(chatId);
+                $.ajax({
+                    url: '/api/chat/delChat?chat_id=' + chatId,
+                    type: 'GET',
+                    async: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        if (res.success) {
+                            $(btn).closest('.menu-item-container1').remove();
+                            if (chatId === String(currentMessageId)) {
+                                newChat();  // ✅ 清空聊天区
+                            }
+                            layer.alert('删除成功', { icon: 1, title: '成功' });
+                        } else {
+                            layer.alert('删除失败', { icon: 2, title: '错误' });
+                        }
+                    },
+                    error: function (xhr, status, err) {
+                        console.error("请求错误:", err);
+                    }
+                });
+                layer.close(index);
+            });
+        }
+
+        function scroll() {
+            let sc = document.getElementById('chat-messages')
+            sc.scrollTop = sc.scrollHeight;
+        }
+
+        async function load(upid) {
+            var $parentContainer = $('.menu-item-container[data-id="' + upid + '"]');
+            console.log('load(' + upid + ')')
+            await myFuncs.loadKb(upid, $parentContainer)
+        }
+
+        async function loadAddDocDom(item) {
+            console.log(item)
+            item = JSON.parse(item)
+            let [row, icon] = await myFuncs.appendChildDirs(item);
+            var $parentContainer = $('.child-container[data-up-id="' + item.up_id + '"]');
+            $parentContainer.append(row);
+        }
+
+        function selected_kb(id) {
+            knowledge_base_id = id
+            document_id = ''
+        }
+
+        function selected_atc(id_act, id_kb) {
+            knowledge_base_id = id_kb
+            document_id = id_act
+        }
+
+
+        function newChat() {
+            // ✅ 如果上一个 SSE 还在进行，先关闭
+            if (window.currentEventSource) {
+                try {
+                    window.currentEventSource.close();
+                } catch (e) {
+                }
+                window.currentEventSource = null;
+            }
+
+            // ✅ 清空 UI 和状态
+            document.getElementById('chat-messages').innerHTML = '';
+            messageIndex = 0;
+            edits = [];
+            edit_texts = [];
+            isReplying = false;
+            // enableInput && enableInput();
+
+            // ✅ 生成新的会话 ID
+            currentMessageId = crypto.randomUUID();
+
+            $(".history-item").removeClass("active");
+
+            // ✅ 刷新右侧历史
+            initHis && initHis();
+        }
+
+
+        function spread_left() {
+            $('#rightSidebar').css('display', 'none')
+            $('#rightResizer').css('display', 'none')
+            $('#rightSidebar1').css('display', 'block')
+        }
+
+        function spread_right() {
+            $('#rightSidebar').css('display', 'block')
+            $('#rightResizer').css('display', 'block')
+            $('#rightSidebar1').css('display', 'none')
+        }
+
+        function openLocalFile(filepath) {
+            window.parent.pywebview.api.openLocalFile(filepath)
+        }
+
+        function changeFileNum(filenum) {
+            const numberEl = document.querySelector('#number_file span');
+            if (filenum > 0) {
+                numberEl.style.color = 'red';
+                if (lastState == STATE.LOADING) {
+                    // switchInput.checked = true;
+                    spinner.classList.add('fa-spin');
+                }
+                statusTextEl.textContent = `正在加载文件:`;
+                spinnerEl.style.display = 'inline-block';
+                switchContainer.classList.remove('disabled');
+                switchContainer.style.display = 'inline-block';
+            } else {
+                numberEl.style.color = '#999';
+                switchInput.checked = true;
+                switchContainer.classList.remove('disabled');
+                spinnerEl.style.display = 'none';
+                switchContainer.style.display = 'none';
+                statusTextEl.textContent = `待加载文件:`;
+            }
+            numberEl.innerText = filenum;
+        }
+
+        function updateKbState(kbId, state) {
+            // 通过知识库ID设置知识库状态、知识库样式颜色
+            const $row = $(`#kbMenu .menu-item-container[data-id='${kbId}']`);
+            if ($row.length === 0) return;
+
+            const $inner = $row.find('.menu-item-inner');
+
+            const title = $inner.attr('title');
+            $inner.attr('kb_load_state', state);
+            // 设置新文本
+            if (state == '完成') {
+                $inner.text(`${title}`);
+                $inner.attr('kb_load_state', state);
+            } else if (state == '已删除') {
+                $row.remove();
+            } else {
+                $inner.text(`${title}  (${state})`);
+                $inner.attr('kb_load_state', state);
+            }
+            // 设置颜色
+            setTextColor($inner, state);
+        }
+
+        function updateDocState(doc_id, state) {
+            // 通过文件id设置文件状态、文件样式颜色
+            const $row = $(`#kbMenu .menu-item-container[data-article-id='${doc_id}']`);
+            if ($row.length === 0) return;
+
+            const $inner = $row.find('.file-item-inner');
+            const title = $inner.attr('title');
+            // 设置新文本
+            if (state == '完成') {
+                $inner.text(`${title}`);
+            } else if (state == '已删除') {
+                $row.remove();
+            } else {
+                $inner.text(`${title}  (${state})`);
+            }
+            // 设置颜色
+            setTextColor($inner, state);
+        }
+
+        function setTextColor($inner, state) {
+            if (state == '加载中' || state == '新增,待加载' || state == '已修改,待加载') {
+                $inner.attr('style', 'color: #ffce75;');
+
+            } else if (state == '加载失败' || state == '不支持' || state == '文件过大,未解析') {
+                $inner.attr('style', 'color: lightgray;');
+
+            } else {
+                $inner.attr('style', 'color: rgb(89 89 89);');
+
+            }
+        }
+
+
+        let index = 0
+
+        function getDir() {
+            event.preventDefault();
+            //选择文件时，禁用输入框
+            disableInput();
+
+            // 获取"关联本地目录"按钮并显示加载状态
+            const dirButton = document.querySelector('.local-dir');
+            const originalContent = dirButton.innerHTML;
+            dirButton.innerHTML = '<i class="layui-icon layui-icon-loading layui-icon-spin"></i><span>正在选择...</span>';
+            dirButton.disabled = true;
+
+            var url = '/api/knowledge/addKb';
+            var layerIndex = layer.load(2, { shade: [0.5, '#000'] });
+            $.get(url, function (res) {
+                if (res.status === 'success') {
+                    layer.msg('启动文档解析任务，未完成解析的文档不能进行对话');
+                    console.log(res.data);
+                    myFuncs.loadKb(0, $('#kbMenu'));
+                } else {
+                    layer.msg(res.data);
+                }
+
+                // AJAX 完成后恢复按钮状态
+                enableInput();
+                dirButton.innerHTML = originalContent;
+                dirButton.disabled = false;
+
+            }).fail(function (err) {
+                console.error('选择目录出错:', err);
+                layer.msg('选择目录失败，请重试');
+            }).always(function () {
+                layer.close(layerIndex);
+                enableInput();
+                dirButton.innerHTML = originalContent;
+                dirButton.disabled = false;
+            });;
+        }
+    </script>
+</body>
+
+</html>

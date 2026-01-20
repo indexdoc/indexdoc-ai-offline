@@ -1,0 +1,173 @@
+html body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2)), url(/pc/static/img/loginImg.png);
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+/* .container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(100,152,222, 0.5); 
+    z-index: 1; 
+  } */
+
+.logo {
+    width: 100%;
+}
+
+.logo img {
+    width: 195rem;
+    height: 195rem;
+    display: flex;
+    margin: auto;
+}
+
+.tit {
+    font-family: Source Han Sans;
+    font-size: 44rem;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.form {
+    width: 80%;
+    margin: auto;
+}
+
+.loginConInputName {
+    width: 100%;
+    height: 50rem;
+    border-radius: 30rem;
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: row;
+    margin-top: 20rem;
+}
+
+.loginicon {
+    width: 38rem;
+    height: 38rem;
+    margin: 10rem 10rem 0 25rem;
+}
+
+.loginicon img {
+    width: 65%;
+    display: flex;
+}
+
+.split {
+    width: 1rem;
+    height: 30rem;
+    background-color: #E0E0E0;
+    margin: 13rem 22rem 0 22rem;
+}
+
+
+.loginConInputName input {
+    border: none;
+    width: 70%;
+    /* height: 32rem; */
+    /* margin-top: 12rem; */
+    font-size: 18rem;
+    background: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+::placeholder {
+    font-family: Source Han Sans;
+    font-size: 18rem;
+    font-weight: 350;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #90C5FC;
+}
+
+.code {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+}
+
+.register {
+    font-family: Source Han Sans;
+    font-size: 18rem;
+    font-weight: 350;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #FFFFFF;
+    margin: 30rem 0 0 20rem;
+}
+
+.getCode {
+    width: 100rem;
+    /* height: 42rem; */
+    border-radius: 10rem;
+    opacity: 1;
+    color: #FFFFFF;
+    font-family: Source Han Sans;
+    font-size: 16rem;
+    font-weight: 350;
+    padding: 5rem 8rem;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #FFFFFF;
+    margin: 0 0 0 auto;
+    text-align: center;
+}
+
+.loginBtn {
+    width: 80%;
+    height: 45rem;
+    border-radius: 25rem;
+    opacity: 1;
+    background: #006DDE;
+    margin: auto;
+    font-family: Source Han Sans;
+    font-size: 18rem;
+    font-weight: 350;
+    line-height: 45rem;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #FFFFFF;
+    text-align: center;
+    margin-top: 18rem;
+}
+
+#refreshCaptcha {
+    /* width: 140rem; */
+    height: 29rem;
+    margin-right: 14rem;
+    margin-top: 9rem;
+    cursor: pointer;
+    border: 1rem solid #e6e6e6;
+    position: absolute;
+    right: 0;
+}

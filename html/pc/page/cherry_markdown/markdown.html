@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cherry Markdown 编辑器示例</title>
+    <!-- 引入Cherry Markdown的CSS文件 -->
+    <link rel="stylesheet" type="text/css" href="/pc/static/cherry-markdown/cherry-markdown.css">
+    <script src="/pc/static/js/tailwind.js"></script>
+    <!-- 引入Font Awesome -->
+    <link href="/pc/static/css/fontAwesome.css" rel="stylesheet">
+    <link href="/pc/static/css/layui.css" rel="stylesheet">
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 99%;
+            font-family: Arial, sans-serif;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            justify-content: flex-end;
+        }
+
+        .replace-bubble {
+            background: #ffeb3b;
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .replace-bubble:hover {
+            background: #fdd835;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .replace-bubble::before {
+            content: "🔄";
+            font-size: 1.1em;
+        }
+
+        /* 编辑器容器样式 */
+        #contain {
+            width: 100%;
+            height: 96%;
+            display: flex;
+        }
+
+        /* 编辑器容器样式 */
+        #main {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        #footer {
+            width: 100%;
+            height: 10%;
+            box-sizing: border-box;
+        }
+
+        #left-panel {
+            /*flex: 1;*/
+            width: 100%;
+            height: 100%;
+            /*padding: 20px;*/
+            /*background: #f5f5f5;*/
+        }
+
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 20px;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .user-message {
+            background: #e3f2fd;
+            margin-left: auto;
+        }
+
+        .ai-message {
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .export {
+            position: absolute;
+            top: 0.5%;
+            right: 2%;
+            z-index: 999;
+        }
+
+
+
+
+
+        .titleCon {
+            position: absolute;
+            width: 100%;
+            top: 6%;
+            z-index: 999;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .dividerCon {}
+
+        .editerCon {
+            width: 50%;
+            font-weight: 600;
+            color: #4b5563;
+            border-bottom: 1px solid #e2e8f0;
+            background-color: #f8fafc;
+            padding: 10px;
+            border-right: 1px solid #E2E8F0;
+        }
+
+        .perviewCon {
+            width: 50%;
+            font-weight: 600;
+            color: #4b5563;
+            border-bottom: 1px solid #e2e8f0;
+            background-color: #f8fafc;
+            padding: 10px;
+            border-right: 1px solid #E2E8F0;
+        }
+
+        .tip {
+            position: absolute;
+            margin-left: 54px;
+            font-size: 11px;
+            color: #4b5563b5;
+        }
+
+        .cherry-dropdown {
+            z-index: 999 !important;
+        }
+
+        .cherry .cherry-editor-title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            font-weight: 600;
+            color: #4b5563;
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding-left: 10px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .CodeMirror-scroll {
+            overflow: scroll !important;
+            /* Things will break if this is overridden */
+            /* 50px is the magic margin used to hide the element's real scrollbars */
+            /* See overflow: hidden in .CodeMirror */
+            margin-bottom: -50px;
+            margin-right: 0px;
+            padding-top: 28px;
+            height: 100%;
+            outline: none;
+            /* Prevent dragging from highlighting the element */
+            position: relative;
+        }
+
+        .cherry .cm-editor {
+            position: relative;
+            padding-top: 40px;
+        }
+
+        .cherry .cherry-previewer {
+            position: relative;
+            padding-top: 0px;
+        }
+
+
+        .cherry-previewer .cherry-editor-title {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .cherry-previewer {
+            padding-right: 0px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="contain">
+        <div class="export">
+            <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition-colors"
+                onclick="export_word('word')">
+                <i class="fa fa-file-word-o mr-2"></i>导出word
+            </button>
+            <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition-colors"
+                onclick="export_pdf('pdf')">
+                <i class="fa fa-file-pdf-o mr-2"></i>导出pdf
+            </button>
+            <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition-colors"
+                onclick="export_markdown()">
+                <i class="fa fa-copy mr-2"></i>保存markdown文件
+            </button>
+            <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition-colors"
+                onclick="export_txt()">
+                <i class="fa fa-file-text mr-2"></i>复制文字
+            </button>
+        </div>
+        <!-- <div class="tip">可将大模型中的内容复制到此处进行编辑</div> -->
+        <!-- 编辑器容器 -->
+        <div id="left-panel">
+            <div id="main">
+                <!-- <div class="titleCon">
+                    <div class="editerCon">编辑区</div> -->
+                <!-- <div class="dividerCon"></div> -->
+                <!-- <div class="perviewCon">预览区</div>
+                </div> -->
+                <div id="editor" style="height: 106%;"></div>
+            </div>
+            <!--        <div id="footer">-->
+            <!--            <input type="file" id="fileInput">-->
+            <!--            <button id="upload" onclick="startUpload()">上传文件</button>-->
+            <!--            <button onclick="generateMenu()">生成目录</button>-->
+            <!--            <button onclick="generateMsg(0)">生成内容</button>-->
+            <!--&lt;!&ndash;            <button onclick="exportWord()">导出内容</button>&ndash;&gt;-->
+            <!--        </div>-->
+        </div>
+    </div>
+
+    <!-- 引入Cherry Markdown的JS文件 -->
+    <script src="/pc/static/js/layui.js"></script>
+    <!-- <script src="/pc/static/js/echarts.js"></script> -->
+    <script src="/pc/static/cherry-markdown/cherry-markdown.js"></script>
+    <script src="/pc/static/js/mermaid.js"></script>
+    <script src="/pc/static/js/jquery-2.1.1.js"></script>
+    <script src="/pc/static/js/request.js"></script>
+    <!-- <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script> -->
+
+
+    <script>
+        // let doc_name = ""
+        // let keywords = ""
+        // let menu = ""
+        // let content = ''
+        // let selection = ''
+        // let start_pos = { line: 0, ch: 0 }
+        // let end_pos = { line: 0, ch: 0 }
+        // let editor
+        // let headings = [];
+        // // 页面加载完成后初始化编辑器
+        // window.onload = function () {
+        //     editor = new Cherry({
+        //         id: 'editor',            // 绑定容器的ID
+        //         width: '100%',           // 编辑器宽度
+        //         height: '90%',          // 编辑器高度
+        //         markdown: 'asdasdasd' // 初始markdown文本
+        //         // 可根据需求添加其他配置项
+        //     });
+
+
+        //     // 监听 CodeMirror 的 paste 事件
+        //     let cm = editor.getCodeMirror();
+
+        let doc_name = ""
+        let keywords = ""
+        let menu = ""
+        let content = ''
+        let selection = ''
+        let start_pos = { line: 0, ch: 0 }
+        let end_pos = { line: 0, ch: 0 }
+        let editor
+        let headings = [];
+
+        // 页面加载完成后初始化编辑器
+        window.onload = function () {
+            mermaid.initialize({
+                flowchart: { htmlLabels: false },
+                startOnLoad: false,
+                useMaxWidth: false,  // 全局禁用响应式宽度，使用固定像素大小
+                // flowchart: { useMaxWidth: false },  // 针对流程图
+                // sequence: { useMaxWidth: false },   // 针对序列图
+                // gantt: { useMaxWidth: false },      // 针对甘特图（可选，根据您的图表类型添加）
+                // 可以添加更多类型，如 classDiagram: { useMaxWidth: false }
+            });
+
+            editor = new Cherry({
+                id: 'editor',            // 绑定容器的ID
+                width: '100%',           // 编辑器宽度
+                height: '90%',           // 编辑器高度
+                markdown: 'asdasdasd', // 初始markdown文本
+                callback: {
+                    afterChange: function () {
+                        addPreviewTitle();
+                    },
+                    afterRender: function () {
+                        addPreviewTitle();
+                    }
+                }
+            });
+
+            function setPerviewerCss() {
+                const parent = document.querySelector('.cherry-previewer');
+                const children = parent.querySelectorAll(':not(:first-child)');
+
+                children.forEach(el => {
+                    el.style.backgroundColor = '#f0f0f0';
+                    el.style.border = '1px solid #ccc';
+                });
+
+            }
+
+            function addPreviewTitle() {
+                const previewerEl = document.querySelector('.cherry-previewer');
+                if (previewerEl && !previewerEl.querySelector('.preview-title')) {
+                    const previewTitle = document.createElement('div');
+                    previewTitle.className = 'cherry-editor-title preview-title';
+                    previewTitle.innerText = '预览区';
+                    previewTitle.style = 'margin: -20px 0px 20px -20px; width: calc(100% + 20px);'
+                    previewerEl.prepend(previewTitle);
+                }
+            }
+
+            // 获取 CodeMirror 实例
+            let cm = editor.getCodeMirror();
+            // 获取编辑区 DOM
+            const editWrapper = cm.getWrapperElement();
+
+            // 添加编辑区标题
+            const editTitle = document.createElement('div');
+            editTitle.className = 'cherry-editor-title';
+            editTitle.innerText = '编辑区';
+            const Tip = document.createElement('div');
+            Tip.className = 'tip';
+            Tip.innerText = '可将大模型中的内容复制到此处进行编辑';
+            editTitle.prepend(Tip)
+            editWrapper.appendChild(editTitle);
+
+
+            // ---------- 右键菜单功能 ----------
+            const showContextMenu = (e, items) => {
+                e.preventDefault();
+                $('.custom-popup').remove();
+                const $menu = $('<div class="custom-popup"></div>').css({
+                    top: e.pageY + 'px',
+                    left: e.pageX + 'px',
+                    position: 'absolute',
+                    zIndex: 9999,
+                    background: '#fff',
+                    border: '1px solid #ccc',
+                    padding: '5px',
+                    minWidth: '120px',
+                    borderRadius: '4px',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
+                });
+
+                Object.entries(items).forEach(([label, handler]) => {
+                    const $item = $('<div class="menu-item"></div>').text(label).css({
+                        padding: '8px 12px',
+                        cursor: 'pointer'
+                    });
+                    $item.on('click', function () {
+                        handler();
+                        $('.custom-popup').remove();
+                    });
+                    $item.hover(() => $item.css('background', '#f2f2f2'),
+                        () => $item.css('background', '#fff'));
+                    $menu.append($item);
+                });
+
+                $('body').append($menu);
+            };
+
+            // 点击页面其它地方时隐藏菜单
+            $(document).on('click', () => $('.custom-popup').remove());
+
+            // 绑定右键事件到编辑器
+            cm.getWrapperElement().addEventListener("contextmenu", function (e) {
+                e.preventDefault();
+                const selectedText = cm.getSelection();
+                showContextMenu(e, {
+                    '复制': () => {
+                        if (selectedText) {
+                            navigator.clipboard.writeText(selectedText).then(() => {
+                                layer.msg('复制成功', { icon: 1, time: 1000 });
+                            });
+                        } else {
+                            layer.msg('请先选中要复制的内容', { icon: 0, time: 1500 });
+                        }
+                    },
+                    '粘贴': async () => {
+                        $.ajax({
+                            url: '/api/md/mdPaste',
+                            type: 'POST',
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (result) {
+                                if (result.success) {
+                                    cm.replaceSelection(result.data);
+                                }
+                            },
+                            error: function (xhr, status, err) {
+                                console.error("请求错误:", err);
+                            }
+                        });
+                    }
+                });
+            });
+
+
+            cm.on("paste", function (cm, e) {
+                e.preventDefault();
+                const clipboardData = e.clipboardData || window.clipboardData;
+                let pastedText = clipboardData.getData('text');
+                const unixFormattedText = pastedText.replace(/\r\n/g, '\n');
+
+                // 在光标位置插入文本
+                cm.replaceSelection(unixFormattedText);
+            });
+
+
+        };
+
+        // 循环监听预览区 DOM 是否生成
+        const previewCheckInterval = setInterval(() => {
+            let previewerEl = null;
+
+            previewerEl = document.querySelector('.cherry-previewer');
+            if (previewerEl) {
+                // 生成标题
+                const previewTitle = document.createElement('div');
+                previewTitle.className = 'cherry-editor-title';
+                previewTitle.innerText = '预览区';
+                previewTitle.style = 'margin: -20px 0px 20px -20px; width: calc(100% + 20px);'
+                previewerEl.appendChild(previewTitle);
+
+                // 停止循环
+                clearInterval(previewCheckInterval);
+            }
+        }, 50);
+
+        async function mermaidToBase64(mermaidCode) {
+            return new Promise(async (resolve) => {
+                try {
+                    const renderId = 'tempMermaid_' + Date.now() + Math.random().toString(36).slice(2);
+                    const { svg: svgCode } = await mermaid.render(renderId, mermaidCode);
+                    if (!svgCode) return resolve(null);
+
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(svgCode, 'image/svg+xml');
+                    const svgEl = doc.querySelector('svg');
+                    if (!svgEl) return resolve(null);
+                    svgEl.setAttribute('style', 'overflow: visible;');
+                    let width = parseFloat(svgEl.getAttribute('width'));
+                    let height = parseFloat(svgEl.getAttribute('height'));
+
+                    if ((!width || !height) && svgEl.getAttribute('viewBox')) {
+                        const viewBox = svgEl.getAttribute('viewBox').split(/\s+/);
+                        width = parseFloat(viewBox[2]);
+                        height = parseFloat(viewBox[3]);
+                    }
+
+                    // 默认最小宽高
+                    width = width || 800;
+                    height = height || 600;
+
+                    const svgData = new XMLSerializer().serializeToString(svgEl);
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+
+                    const img = new Image();
+                    img.onload = () => {
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL('image/png'));
+                    };
+                    img.onerror = () => resolve(null);
+                    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData);
+                } catch (err) {
+                    console.error('Mermaid 渲染错误:', err);
+                    resolve(null);
+                }
+            });
+        }
+
+        function svgToPngBase64(svgElement) {
+            const svgStr = new XMLSerializer().serializeToString(svgElement);
+            const canvas = document.createElement("canvas");
+            const bbox = svgElement.getBoundingClientRect();
+            canvas.width = bbox.width || 800;
+            canvas.height = bbox.height || 600;
+            const ctx = canvas.getContext("2d");
+
+            const img = new Image();
+
+            return new Promise(resolve => {
+                img.onload = () => {
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL('image/png'));
+                    };
+                    img.onerror = () => resolve(null);
+                    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgStr);
+            });
+        }
+
+        async function replaceSvgWithPng(htmlString) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlString, "text/html");
+            const svgs = Array.from(doc.querySelectorAll("svg"));
+
+            for (let svg of svgs) {
+                const pngBase64 = await svgToPngBase64(svg);
+                const img = doc.createElement("img");
+                img.src = pngBase64;
+                svg.parentNode.replaceChild(img, svg);
+            }
+
+            return doc.body.innerHTML;
+        }
+
+
+        async function export_pdf(type) {
+            var md_content = editor.getMarkdown().trim();
+            var html_content = editor.getHtml();
+            if (md_content == '') {
+                layui.use(function () {
+                    var layer = layui.layer;
+                    layer.msg('请先编辑内容');
+                    return;
+                })
+            } else {
+                var layerIndex = layer.load(2, { shade: [0.5, '#000'] });
+                var replace_html_content = await replaceSvgWithPng(html_content);
+                $.ajax({
+                    url: '/api/md/mdPdf',
+                    type: 'POST',
+                    data: JSON.stringify({ html_content: replace_html_content }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+                        if (result.success) {
+                            // 把 Base64 转成 Blob
+                            const byteCharacters = atob(result.file);
+                            const byteNumbers = new Array(byteCharacters.length);
+                            for (let i = 0; i < byteCharacters.length; i++) {
+                                byteNumbers[i] = byteCharacters.charCodeAt(i);
+                            }
+                            const byteArray = new Uint8Array(byteNumbers);
+                            const blob = new Blob([byteArray], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+                            // 创建下载链接
+                            const link = document.createElement("a");
+                            link.href = window.URL.createObjectURL(blob);
+                            // 找到第一行非空文本
+                            let firstLine = md_content.split('\n').find(line => line.trim() !== '') || 'markdown';
+                            // 去掉 Markdown 标记（如 #、*、_ 等）
+                            firstLine = firstLine.replace(/^#+\s*/, '').replace(/[*_`~>]/g, '').trim();
+                            // 取前 10 个字符（避免太长）
+                            firstLine = firstLine.slice(0, 10) || 'markdown';
+                            link.download = `${firstLine}.pdf`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            window.URL.revokeObjectURL(link.href);
+                            layer.close(layerIndex);
+                            layer.msg('导出成功');
+                        }
+                    },
+                    error: function (xhr, status, err) {
+                        layer.close(layerIndex);
+                        layer.msg('导出失败');
+                        console.error("请求错误:", err);
+                    }
+
+                });
+            }
+        }
+
+        //复制为markdown
+        async function export_markdown() {
+            var md_content = editor.getMarkdown().trim();
+            if (md_content == '') {
+                layui.use(function () {
+                    var layer = layui.layer;
+                    layer.msg('请先编辑内容');
+                    return;
+                })
+            } else {
+                 var layerIndex = layer.load(2, { shade: [0.5, '#000'] });
+
+                $.ajax({
+                    url: '/api/md/mdFile',
+                    type: 'POST',
+                    data: JSON.stringify({ md_content: md_content }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+                        if (result.success) {
+                            // 把 Base64 转成 Blob
+                            const byteCharacters = atob(result.file);
+                            const byteNumbers = new Array(byteCharacters.length);
+                            for (let i = 0; i < byteCharacters.length; i++) {
+                                byteNumbers[i] = byteCharacters.charCodeAt(i);
+                            }
+                            const byteArray = new Uint8Array(byteNumbers);
+                            const blob = new Blob([byteArray], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+                            // 创建下载链接
+                            const link = document.createElement("a");
+                            link.href = window.URL.createObjectURL(blob);
+                            // 找到第一行非空文本
+                            let firstLine = md_content.split('\n').find(line => line.trim() !== '') || 'markdown';
+                            // 去掉 Markdown 标记（如 #、*、_ 等）
+                            firstLine = firstLine.replace(/^#+\s*/, '').replace(/[*_`~>]/g, '').trim();
+                            // 取前 10 个字符（避免太长）
+                            firstLine = firstLine.slice(0, 10) || 'markdown';
+                            link.download = `${firstLine}.md`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            window.URL.revokeObjectURL(link.href);
+                            layer.close(layerIndex);
+                            layer.msg('导出成功');
+                        }
+                    },
+                    error: function (xhr, status, err) {
+                        layer.close(layerIndex);
+                        layer.msg('导出失败');
+                        console.error("请求错误:", err);
+                    }
+
+                });
+            }
+        }
+
+
+
+
+        //复制为文本
+        function export_txt() {
+            var text = editor.getMarkdown().trim();
+            if (!text) {
+                layer.msg("请先编辑内容")
+                return
+            };
+            // 使用 Clipboard API
+            navigator.clipboard.writeText(text).then(() => {
+                layer.msg("复制文本成功")
+            }).catch(err => {
+                console.error('复制失败:', err);
+            });
+        }
+
+        async function export_word(type) {
+            var md_content = editor.getMarkdown().trim();
+            if (md_content == '') {
+                layui.use(function () {
+                    var layer = layui.layer;
+                    layer.msg('请先编辑内容');
+                    return;
+                })
+            } else {
+                var layerIndex = layer.load(2, { shade: [0.5, '#000'] });
+                // 替换 Mermaid 代码块
+                const mermaidRegex = /```mermaid\n([\s\S]*?)```/g;
+                md_content = md_content.replace(/<br\s*\/?>/gi, '\\n');
+                const promises = [];
+                let match;
+                while ((match = mermaidRegex.exec(md_content)) !== null) {
+                    const code = match[1];
+                    promises.push(mermaidToBase64(code));
+                }
+                const base64Images = await Promise.all(promises);
+                // 替换 Markdown 中 Mermaid 为 Base64 图片
+                let index = 0;
+                md_content = md_content.replace(mermaidRegex, () => {
+                    const img = base64Images[index++];
+                    return img ? `![](${img})` : '';
+                });
+
+                // console.log('处理后的 Markdown:', markdown);
+                $.ajax({
+                    url: '/api/md/mdWord',
+                    type: 'POST',
+                    data: JSON.stringify({ md_content: md_content }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+                        if (result.success) {
+                            // 把 Base64 转成 Blob
+                            const byteCharacters = atob(result.file);
+                            const byteNumbers = new Array(byteCharacters.length);
+                            for (let i = 0; i < byteCharacters.length; i++) {
+                                byteNumbers[i] = byteCharacters.charCodeAt(i);
+                            }
+                            const byteArray = new Uint8Array(byteNumbers);
+                            const blob = new Blob([byteArray], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+                            // 创建下载链接
+                            const link = document.createElement("a");
+                            link.href = window.URL.createObjectURL(blob);
+                            // 找到第一行非空文本
+                            let firstLine = md_content.split('\n').find(line => line.trim() !== '') || 'markdown';
+                            // 去掉 Markdown 标记（如 #、*、_ 等）
+                            firstLine = firstLine.replace(/^#+\s*/, '').replace(/[*_`~>]/g, '').trim();
+                            // 取前 10 个字符（避免太长）
+                            firstLine = firstLine.slice(0, 10) || 'markdown';
+                            link.download = `${firstLine}.docx`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            window.URL.revokeObjectURL(link.href);
+                            layer.close(layerIndex);
+                            layer.msg('导出成功');
+                        }
+                    },
+                    error: function (xhr, status, err) {
+                        layer.close(layerIndex);
+                        layer.msg('导出失败');
+                        console.error("请求错误:", err);
+                    }
+
+                });
+            }
+        }
+
+        function startUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('请先选择文件');
+                return;
+            }
+
+            // 分片配置（1MB）
+            const chunkSize = 1024 * 1024;
+            const totalChunks = Math.ceil(file.size / chunkSize);
+
+            // 解析文件名和扩展名
+            const lastDotIndex = file.name.lastIndexOf('.');
+            const fileName = lastDotIndex > 0 ? file.name.substring(0, lastDotIndex) : file.name;
+            const fileExt = lastDotIndex > 0 ? file.name.substring(lastDotIndex + 1) : '';
+
+            let currentChunk = 0;
+
+            function uploadChunk() {
+                const start = currentChunk * chunkSize;
+                const end = Math.min(start + chunkSize, file.size);
+                const chunk = file.slice(start, end);
+
+                // 创建表单数据
+                const formData = new FormData();
+                formData.append('file', chunk, file.name);
+                formData.append('fileName', fileName);
+                formData.append('fileExt', fileExt);
+                formData.append('page', currentChunk + 1);  // 分片从1开始计数
+                formData.append('totalPage', totalChunks);
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/api/uploadtempfile', true);  // 替换为实际接口地址
+
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.finish === 2) {
+                            alert('文件上传完成！');
+                            doc_name = response.obj
+                        } else {
+                            currentChunk++;
+                            if (currentChunk < totalChunks) {
+                                uploadChunk();  // 继续上传下一分片
+                            }
+                        }
+
+
+                    } else {
+                        console.error(`上传失败: ${xhr.statusText}`);
+                    }
+                };
+
+                xhr.onerror = function () {
+                    console.error('网络错误，上传失败');
+                };
+
+                xhr.send(formData);
+            }
+
+            uploadChunk();  // 开始上传第一个分片
+        }
+
+        function generateMenu() {
+            if (doc_name === "") {
+                alert("先上传文件")
+            }
+            const formData = new FormData()
+            formData.append('file_name', doc_name);
+            formData.append('prompt', 'menu');
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/generateMsg', true);  // 替换为实际接口地址
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    editor.setMarkdown(response.obj)
+                    keywords = response.keywords
+                    menu = response.obj
+                    parseMarkdown(response.obj)
+                }
+            }
+            xhr.send(formData);
+        }
+
+        async function generateMsg(i) {
+            console.log(headings)
+            if (i === headings.length) {
+                alert('内容生成完成！');
+            } else {
+                let heading = headings[i]
+                let head = heading['heading']
+                let start = heading['contentLine']['start']
+                let end = heading['contentLine']['end']
+
+                const formData = new FormData()
+                formData.append('file_name', doc_name);
+                formData.append('menus', menu);
+                formData.append('keywords', keywords);
+                formData.append('menu_name', head);
+                formData.append('prompt', 'text');
+
+                try {
+                    const response = await fetch('/api/generateMsg', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        let cm = editor.getCodeMirror();
+                        cm.replaceRange(data.obj + '\n\n', { line: start, ch: 0 }, { line: end, ch: 0 });
+                        parseMarkdown(editor.getMarkdown());
+                        editor.getCodeMirror().setCursor({ line: headings[i + 1]['contentLine']['end'], ch: 0 })
+                        // editor.previewer.scrollToId(headings[i + 1]['heading']);
+                    } else {
+                        console.error(`Error on heading ${i}:`, response.status);
+                    }
+                } catch (error) {
+                    console.error(`Exception on heading ${i}:`, error);
+                }
+                await generateMsg(i + 1)
+            }
+        }
+
+        function parseMarkdown(markdown) {
+            headings = []
+
+            // 1. 初始化解析器（启用行号追踪）
+            const md = window.markdownit({
+                source: true,   // 保留行号信息
+                html: false,    // 禁用 HTML 标签解析
+                breaks: true
+            });
+
+            // 解析 Markdown 文本
+            const tokens = md.parse(markdown, {});
+
+            // 遍历 tokens，查找标题及其对应内容的行号
+            for (let i = 0; i < tokens.length; i++) {
+                if (tokens[i].type === 'heading_open') {
+                    const headingToken = tokens[i];
+                    const inlineToken = tokens[i + 1]; // 紧跟的 inline token 包含标题文字
+                    // 标题所在的行号（map 数组： [startLine, endLine]）
+                    const headingStartLine = headingToken.map ? headingToken.map[0] + 1 : null; // +1 转换为 1 基准
+                    const headingEndLine = headingToken.map ? headingToken.map[1] : null;
+
+                    // 定义内容开始行：标题结束行的下一行
+                    let contentStartLine = headingToken.map ? headingToken.map[1] + 1 : null;
+                    let contentEndLine = null;
+
+                    // 寻找下一个标题 token 以确定本标题的内容结束行
+                    let j = i + 1;
+                    while (j < tokens.length) {
+                        if (tokens[j].type === 'heading_open') {
+                            if (tokens[j].map) {
+                                contentEndLine = tokens[j].map[0]; // 下一个标题开始的行作为结束行
+                            }
+                            break;
+                        }
+                        j++;
+                    }
+                    // 如果后面没有更多标题，则内容延续到文档最后一行
+                    if (contentEndLine === null) {
+                        // 假设最后一个 token 的 map 的结束行就是文档总行数
+                        const lastToken = tokens[tokens.length - 1];
+                        contentEndLine = lastToken.map ? lastToken.map[1] : contentStartLine;
+                    }
+
+                    headings.push({
+                        heading: inlineToken ? inlineToken.content : '',
+                        headingLine: {
+                            start: headingStartLine,
+                            end: headingEndLine
+                        },
+                        contentLine: {
+                            start: contentStartLine,
+                            end: contentEndLine
+                        }
+                    });
+                }
+            }
+
+        }
+
+        // 辅助函数：获取标题文本
+        function getHeadingText(tokens, index) {
+            let i = index + 1;
+            let text = '';
+            while (tokens[i]?.type !== 'heading_close') {
+                if (tokens[i]?.type === 'inline') {
+                    text += tokens[i].content;
+                }
+                i++;
+            }
+            return text.trim();
+        }
+
+        // 辅助函数：获取列表项文本
+        function getListItemText(tokens, index) {
+            let i = index + 1;
+            let text = '';
+            while (tokens[i]?.type !== 'list_item_close') {
+                if (tokens[i]?.type === 'inline') {
+                    text += tokens[i].content;
+                }
+                i++;
+            }
+            return text.trim();
+        }
+
+
+        let eventSource = null;
+        let currentMessageId = null;
+
+        // 初始化SSE连接
+        function initSSE() {
+            if (eventSource) eventSource.close();
+
+            eventSource = new EventSource('/api/sse');
+
+            eventSource.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.id !== currentMessageId) return;
+
+
+                if (data.type === 'start') {
+                    content = ''
+                    appendMessage('', 'ai', true);
+                } else if (data.type === 'delta') {
+                    content += data.content
+                    appendDeltaContent(data.content);
+                } else if (data.type === 'end') {
+                    finalizeMessage(content);
+                }
+            };
+
+            eventSource.onerror = () => {
+                console.error('SSE连接错误');
+                eventSource.close();
+            };
+        }
+
+        async function send(param) {
+            try {
+                const response = await fetch('/api/bsChat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: param
+                });
+
+                if (!response.ok) {
+                    throw new Error('请求失败');
+                }
+            } catch (error) {
+                console.error('发送失败:', error);
+                appendMessage("消息发送失败", 'ai');
+            }
+        }
+
+        // 完成消息处理
+        function finalizeMessage(content) {
+            let messageEl = document.querySelector('.last-message');
+            messageEl.classList.remove('last-message');
+            currentMessageId = null;
+            const actionBar = document.createElement('div');
+            actionBar.className = 'message-actions';
+            actionBar.innerHTML = '<button class="replace-bubble" onclick="handleReplace(`' + content + '`)">替换选中文字</button>';
+            messageEl.appendChild(actionBar);
+        }
+
+        function handleReplace(content) {
+            let cm = editor.getCodeMirror();
+            cm.replaceRange(content + '\n\n', start_pos, end_pos);
+        }
+
+        // 初始化时建立连接
+        // initSSE();
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,305 @@
+body {
+  /* background-color: #F2F2F2; */
+}
+
+.chat-container {
+  max-width: 90%;
+  margin: 10px auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  height: 97vh;
+}
+
+.docTalk-chat-container {
+  max-width: 90%;
+  margin: 10px auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  height: 80vh;
+}
+
+.knowledge-chat-container {
+  max-width: 90%;
+  margin: 10px auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  height: 79vh;
+}
+
+.chat-container2 {
+  width: 25%;
+  margin: 24px 12px 24px 24px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  /* height: 720px; */
+}
+
+.chat-container3 {
+  width: 75%;
+  margin: 24px 24px 24px 12px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  /* height: 720px; */
+}
+
+.chat-messages {
+  padding: 10px;
+  overflow-y: auto;
+  height: 683px;
+}
+
+.chat-messages2 {
+  padding: 10px;
+  overflow-y: auto;
+  /* height: 544px; */
+}
+
+.knowledge-chat-messages {
+  padding: 10px;
+  overflow-y: auto;
+  height: 70vh;
+}
+
+.docTalk-chat-messages {
+  padding: 10px;
+  overflow-y: auto;
+  height: 74vh;
+}
+
+.message {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.message-content {
+  background-color: #ecf0f1;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 70%;
+  margin-right: 10px;
+}
+
+.user-message {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.input-container {
+  display: flex;
+  padding: 10px;
+  background-color: #f2f2f2;
+  position: fixed;
+  bottom: 0;
+  width: 89%;
+  border-radius: 5px;
+}
+
+.input-container2 {
+  display: flex;
+  padding: 10px;
+  background-color: #f2f2f2;
+  width: 98%;
+  border-radius: 5px;
+}
+
+.input-box {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.send-button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+}
+
+.stopImg {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  display: none;
+  cursor: pointer;
+}
+
+.treeAdd {
+  margin: 10px;
+  text-align: right;
+}
+
+.btnGroup {
+  margin: 10px;
+}
+
+.docSummary {
+  padding: 10px;
+  font-size: 18px;
+}
+
+
+
+/* 新 */
+html body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+iframe{
+  height: 90vh;
+}
+
+.topContainer {
+  width: 100%;
+  height: 75rem;
+  background-color: #EAE9F4;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.topContainer2 {
+  width: 100%;
+  height: 75rem;
+  background-color: #EAE9F4;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleInfo {
+  height: 75rem;
+  display: flex;
+  flex-direction: row;
+  margin-left: 27rem;
+}
+
+.titleInfo img {
+  width: 72rem;
+  height: 72rem;
+}
+
+.titleInfo div {
+  font-family: Source Han Sans;
+  font-size: 28rem;
+  font-weight: bold;
+  line-height: 75rem;
+  letter-spacing: 0em;
+  font-variation-settings: "opsz"auto;
+  font-feature-settings: "kern"on;
+  color: #0174FF;
+}
+
+.userInfo {
+  margin-right: 57rem;
+}
+
+.userInfo img {
+  width: 36rem;
+  height: 36rem;
+  margin-top: 19.5rem;
+}
+
+ul,
+li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  font-family: 思源黑体;
+  font-size: 18rem;
+  font-weight: normal;
+  line-height: normal;
+  letter-spacing: 0em;
+  font-variation-settings: "opsz"auto;
+  font-feature-settings: "kern"on;
+  color: #1E1E1E;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: center;
+  height: 36rem;
+  width: 60%;
+  margin: 10rem 50rem;
+  padding: 6rem 30rem;
+  cursor: pointer;
+}
+
+.liImg {
+  width: 35rem;
+  height: 35rem;
+  margin-right: 7rem;
+}
+
+.liImg>img {
+  width: 75%;
+}
+
+.middleCon {
+  display: flex;
+  flex-direction: row;
+  margin-top: 14rem;
+  height: 90vh;
+}
+
+.leftNav {
+  width: 20%;
+  height: 90vh;
+  border-radius: 20rem;
+  opacity: 1;
+  background-color: #EAE9F4;
+}
+
+.tab-content {
+  width: 56%;
+  height: 90vh;
+  margin: 0 2%;
+  border-radius: 20px;
+  opacity: 1;
+  background-color: #F6F6FF;
+}
+
+.lastDate{
+  width: 20%;
+  height: 90vh;
+  border-radius: 20rem;
+  opacity: 1;
+  background-color: #EAE9F4;
+}
+
+.active{
+  background-color: #D1CEE6;
+  border-radius: 25px;
+  color: #0174FF;
+}
+
+.liTxt{
+  line-height: 36rem;
+}

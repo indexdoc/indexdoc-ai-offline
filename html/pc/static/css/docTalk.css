@@ -1,0 +1,352 @@
+.chat-container {
+    min-width: 1065px;
+    height: 100vh;
+}
+
+.chat-container2 {
+    width: 15%;
+    background-color: #f6f6ff;
+    border-radius: 20px;
+}
+
+.chat-container4 {
+    width: 44.8%;
+    height: 100%;
+    overflow: auto;
+    font-family: 思源黑体;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    font-variation-settings: "opsz" auto;
+    color: #3D3D3D;
+    /* padding: 26px 20px; */
+    background-color: #f6f6ff;
+    border-radius: 20px;
+    margin-left: 0.5%;
+}
+
+.previewTitle {
+    height: 59px;
+    background-color: #EAE9F4;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    font-size: 18px;
+    text-align: left;
+    line-height: 59px;
+    padding-left: 14px;
+    font-family: Source Han Sans;
+    font-weight: 700;
+    font-variation-settings: "opsz" auto;
+    color: #4A87D1;
+}
+
+.previewCon {
+    overflow: auto;
+    width: 100%;
+    /* padding: 10px; */
+    height: 92%;
+}
+
+.upload {
+    width: 90%;
+    height: 170px;
+    background-color: #ffffff;
+    margin: 30px auto;
+    box-sizing: border-box;
+    border: 1px dashed #0174FF;
+    border-radius: 5px;
+}
+
+.uploadImg {
+    width: 83px;
+    height: 83px;
+    background-color: #A3BBFB;
+    border-radius: 50%;
+    margin: 18px auto;
+}
+
+.uploadImg img {
+    width: 43px;
+    margin: 19px 0 0 19px;
+}
+
+.uploadTxt {
+    width: 100%;
+    text-align: center;
+    font-family: Source Han Sans;
+    font-size: 14px;
+    font-weight: 350;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz" auto;
+    font-feature-settings: "kern" on;
+    color: #0174FF;
+}
+
+.chat-container3 {
+    width: 38.5%;
+    margin-left: 0.5%;
+    background-color: #f6f6ff;
+    border-radius: 20px;
+}
+
+
+.input-container {
+    display: flex;
+    /* background-color: #f2f2f2; */
+    /* position: fixed; */
+    /* bottom: 2vh; */
+    width: 38%;
+    border-radius: 5px;
+    flex-direction: column;
+    position: absolute;
+    bottom: 20px;
+}
+
+.label {
+    margin: 0 0 10px 76px;
+    width: 60%;
+}
+
+.label>div {
+    background: #F2F2F2;
+    width: max-content;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-family: Source Han Sans;
+    font-size: 14px;
+    font-weight: 350;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz" auto;
+    font-feature-settings: "kern" on;
+    color: #63688C;
+    cursor: pointer;
+}
+
+.textarea{
+    width: 100%;
+    border: 1px solid #D1CEE6;
+    margin-left: 10px;
+    border-radius: 10px;
+}
+
+
+.textareaCon {
+    display: flex;
+    width: 97%;
+    padding: 0 20px
+}
+
+textarea {
+    width:97%;
+    height: 62px;
+    /* margin: 0 20px; */
+    /* padding: 10px 120px 0 5px; */
+    /* border: 1px solid #D1CEE6; */
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    resize: none;
+    font: inherit;
+    /* 继承父元素的字体样式 */
+    line-height: inherit;
+    /* 继承父元素的行高 */
+    background-color: transparent;
+    /* 设置背景为透明 */
+    overflow: auto;
+    /* 如果需要滚动条，可设置为 auto */
+    /* 其他样式根据需求添加 */
+    padding: 10px;
+}
+
+.sendImg {
+    /* position: fixed;
+    right: 1%;
+    bottom: 2%; */
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    /* margin-top: -78px; */
+    margin-left: auto;
+    /* margin-right: -25%; */
+}
+
+.textareaImg img {
+    width: 40px;
+    height: 40px;
+}
+
+.stopImg {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+
+.stopContainer {
+    display: none;
+    flex-direction: row;
+    /* position: absolute; */
+    /* right: 36%; */
+    /* top: 80%; */
+    border: 1px solid #1E9FFF;
+    padding: 5px 15px;
+    border-radius: 24px;
+    cursor: pointer;
+    color: #1E9FFF;
+    background-color: #1E9FFF;
+    width: 81px;
+    margin-left: auto;
+    font-size: 14px;
+    margin: 5px 5px 5px auto;
+  }
+  
+  .stopContainer div{
+    color: #ffffff;
+    margin-left: 5px;
+  }
+
+
+.send-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+}
+
+
+.messageImg {
+    width: 50px;
+    height: 50px;
+    background-color: #DFEEFF;
+    border-radius: 50%;
+}
+
+.messageImg img {
+    width: 50px;
+    height: 50px;
+}
+
+
+.chat-messages {
+    padding: 0px 10px;
+    overflow-y: auto;
+    height: 72vh;
+}
+
+
+.message {
+    margin: 30px 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.message-content {
+    background-color: #F4F3FC;
+    padding: 24px 25px;
+    max-width: 70%;
+    margin: 0 14px 0 14px;
+    border-radius: 10px;
+    opacity: 1;
+    font-family: 思源黑体;
+    font-weight: 400;
+    font-size: 17px;
+    font-variation-settings: "opsz" auto;
+    color: #3D3D3D;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+.user-message {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+#filename {
+    background-color: #F4F3FC;
+    /* padding: 11px 25px; */
+    width: 90%;
+    margin: 0 14px 0 14px;
+    border-radius: 10px;
+    opacity: 1;
+    font-family: 思源黑体;
+    font-weight: 400;
+    font-size: 16px;
+    font-variation-settings: "opsz" auto;
+    color: #3D3D3D;
+    word-break: break-all;
+}
+
+
+
+.operatBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+  }
+  
+  .operatBtn img{
+    width: 25px;
+    margin: 5px 0 5px 10px;
+    cursor: pointer;
+  }
+  
+  .tooltip-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .tooltip-image {
+    width: 1em;
+    height: 1em;
+  }
+  
+  .tooltip-container::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 124%; /* 提示框在图像上方 */
+    left: 62%;
+    transform: translateX(-50%);
+    background-color: #222;
+    color: #fff;
+    padding: 0.5em;
+    border-radius: 0.2em;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 10;
+  }
+  
+  .tooltip-container::before {
+    content: "";
+    position: absolute;
+    /* bottom: 100%; */
+    left: 62%;
+    top: -0.6em;
+    transform: translateX(-50%);
+    border-width: 0.4em;
+    border-style: solid;
+    border-color: #222 transparent transparent  transparent;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 10;
+    font-size: 16px;
+  }
+  
+  .tooltip-container:hover::after,
+  .tooltip-container:hover::before {
+    opacity: 1;
+  }

@@ -1,0 +1,278 @@
+.chat-container {
+    width: 99%;
+    min-width: 1065px;
+
+}
+
+.chat-container2 {
+    width: 40%;
+    height: 100vh;
+    background-color: #f6f6ff;
+    border-radius: 20px;
+}
+
+.chat-container3 {
+    width: 59%;
+    background-color: #f6f6ff;
+    margin-left: 0.5%;
+    border-radius: 20px;
+}
+
+
+#btn {
+    /* margin: auto; */
+    width: 40%;
+    position: absolute;
+    bottom: 36px;
+    /* padding: 0 100px; */
+    display: flex;
+}
+
+#btn button {
+    width: 32%;
+    margin: auto;
+}
+
+.upload {
+    width: 90%;
+    height: 170px;
+    background-color: #ffffff;
+    margin: 30px auto;
+    box-sizing: border-box;
+    border: 1px dashed #0174FF;
+    border-radius: 5px;
+}
+
+.uploadImg {
+    width: 83px;
+    height: 83px;
+    background-color: #A3BBFB;
+    border-radius: 50%;
+    margin: 18px auto;
+}
+
+.uploadImg img {
+    width: 43px;
+    margin: 19px 0 0 19px;
+}
+
+.uploadTxt {
+    width: 100%;
+    text-align: center;
+    font-family: Source Han Sans;
+    font-size: 14px;
+    font-weight: 350;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz" auto;
+    font-feature-settings: "kern" on;
+    color: #0174FF;
+}
+
+
+.chat-messages {
+    padding: 10px 37px;
+    overflow-y: auto;
+    height: 61vh;
+}
+
+
+.message {
+    margin: 30px 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.message-content {
+    background-color: #F4F3FC;
+    padding: 24px 25px;
+    max-width: 70%;
+    margin: 0 14px 0 14px;
+    border-radius: 10px;
+    opacity: 1;
+    font-family: 思源黑体;
+    font-weight: 400;
+    font-size: 16px;
+    font-variation-settings: "opsz" auto;
+    color: #3D3D3D;
+}
+
+.messageImg {
+    width: 50px;
+    height: 50px;
+    background-color: #DFEEFF;
+    border-radius: 50%;
+}
+
+.messageImg img {
+    width: 50px;
+    height: 50px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+.user-message {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+
+.input-container {
+    display: flex;
+    /* background-color: #f2f2f2; */
+    /* position: fixed; */
+    /* bottom: 2vh; */
+    width: 57%;
+    border-radius: 5px;
+    flex-direction: column;
+    padding: 0 20px;
+    position: absolute;
+    bottom: 20px;
+}
+
+
+textarea{
+    width:97%;
+    height: 62px;
+    /* margin: 0 20px; */
+    /* padding: 10px 120px 0 5px; */
+    /* border: 1px solid #D1CEE6; */
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    resize: none;
+    font: inherit;
+    /* 继承父元素的字体样式 */
+    line-height: inherit;
+    /* 继承父元素的行高 */
+    background-color: transparent;
+    /* 设置背景为透明 */
+    overflow: auto;
+    /* 如果需要滚动条，可设置为 auto */
+    /* 其他样式根据需求添加 */
+    padding: 10px;
+}
+
+.sseContainer {}
+
+
+.textareaCon {
+    /* padding: 0 37px; */
+    display: flex;
+    width: 100%;
+}
+
+
+.textareaImg img {
+    width: 40px;
+    height: 40px
+}
+
+.sendImg {
+    /* position: fixed;
+    right: 1%;
+    bottom: 2%; */
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    /* margin-top: -78px; */
+    margin-left: auto;
+    /* margin-right: -25%; */
+}
+
+.stopImg {
+    /* position: absolute;
+    right: 14.5%;
+    top: 64%; */
+    width: 20px;
+    height: 20px;
+    /* display: none; */
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+
+.send-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+}
+
+.textarea1 {
+    width: 100%;
+    border: 1px solid #D1CEE6;
+    margin-left: 10px;
+    border-radius: 10px;
+}
+
+.stopContainer {
+    display: none;
+    flex-direction: row;
+    /* position: absolute; */
+    /* right: 36%; */
+    /* top: 80%; */
+    border: 1px solid #1E9FFF;
+    padding: 5px 15px;
+    border-radius: 24px;
+    cursor: pointer;
+    color: #1E9FFF;
+    background-color: #1E9FFF;
+    width: 81px;
+    margin-left: auto;
+    font-size: 14px;
+    margin: 5px 5px 5px auto;
+}
+
+.stopContainer div {
+    color: #ffffff;
+    margin-left: 5px;
+}
+
+.filename {
+    padding: 0 23px;
+}
+
+.fileName {
+    margin-top: 10px;
+}
+
+.fileNameSearch {
+    margin-top: 11px;
+    margin-left: 10px;
+    height: 36px;
+    line-height: 36px;
+}
+
+.knowlwdge_menu {
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    color: #666;
+    padding: 10px 0 0 4px;
+}
+
+.knowlwdge_menu_name {
+    cursor: pointer;
+    padding: 0 10px;
+    color: #1E9FFF;
+}
+
+.knowlwdge_menu_name img {
+    margin-top: -2px;
+}
+
+
+.spa {
+    line-height: 20px;
+}

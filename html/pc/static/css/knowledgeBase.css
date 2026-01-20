@@ -1,0 +1,372 @@
+.chat-container {
+  width: 100%;
+  height: 100vh;
+  background-color: #ffffff;
+  min-width: 1065px;
+}
+
+
+.chat-container2 {
+  width: 40%;
+  height: 100vh;
+  background-color: #f6f6ff;
+  border-radius: 20px;
+}
+
+.treeAdd {
+  width: 100%;
+  height: 59px;
+  background-color: #EAE9F4;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: flex;
+}
+
+#menuAdd {
+  /* background-color: #E1E0EB;
+    color: #437DFF;
+    border-color: #437DFF;
+    border-radius: 5px; */
+  margin: 12px 10px 0 auto;
+}
+
+#upload-btn {
+  /* margin: 14px 10px 0 auto; */
+  margin: 12px 10px 0px 10px;
+}
+
+#upload-btn-multiple {
+  margin: 12px 10px 0px 10px;
+}
+
+.chat-container3 {
+  width: 59%;
+  background-color: #f6f6ff;
+  margin-left: 0.5%;
+  border-radius: 20px;
+}
+
+
+.chat-messages {
+  padding: 10px 37px;
+  overflow-y: auto;
+  height: 76vh;
+}
+
+
+.input-container {
+  display: flex;
+  /* background-color: #f2f2f2; */
+  /* position: fixed; */
+  /* bottom: 2vh; */
+  width: 57%;
+  border-radius: 5px;
+  padding: 0 20px;
+  margin-top: 15px;
+  position: absolute;
+  bottom: 20px;
+}
+
+
+.textareaCon {
+  /* padding: 0 37px 0 1px; */
+  display: flex;
+  width: 100%;
+}
+
+.textarea{
+  width: 100%;
+  border: 1px solid #D1CEE6;
+  margin-left: 10px;
+  border-radius: 10px;  
+}
+
+textarea {
+  width: 100%;
+  height: 62px;
+  /* margin: 0 20px; */
+  padding: 10px;
+  /* border: 1px solid #D1CEE6; */
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  resize: none;
+  font: inherit;
+  /* 继承父元素的字体样式 */
+  line-height: inherit;
+  /* 继承父元素的行高 */
+  background-color: transparent;
+  /* 设置背景为透明 */
+  overflow: auto;
+  /* 如果需要滚动条，可设置为 auto */
+  /* 其他样式根据需求添加 */
+  box-sizing: border-box;
+}
+
+.textareaImg img {
+  width: 38px;
+  height: 38px
+}
+
+.sendImg {
+  /* position: absolute;
+    right: 5%;
+    top: 60%; */
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: block;
+  z-index: 999;
+  /* margin-top: -69px; */
+  margin-left: auto;
+}
+
+.stopImg {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+
+.send-button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+}
+
+
+.messageImg {
+  width: 50px;
+  height: 50px;
+  background-color: #DFEEFF;
+  border-radius: 50%;
+}
+
+.messageImg img {
+  width: 50px;
+  height: 50px;
+}
+
+
+
+.message {
+  margin: 30px 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.message-content {
+  background-color: #F4F3FC;
+  padding: 24px 25px;
+  max-width: 70%;
+  margin: 0 14px 0 14px;
+  border-radius: 10px;
+  opacity: 1;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  /* font-variation-settings: "opsz" auto; */
+  color: #333333;
+  line-height: 36px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+
+.user-message {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.previewTitle {
+  height: 59px;
+  background-color: #EAE9F4;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  font-size: 18px;
+  text-align: left;
+  line-height: 59px;
+  padding-left: 14px;
+  font-family: Source Han Sans;
+  font-weight: 700;
+  font-variation-settings: "opsz" auto;
+  color: #4A87D1;
+}
+
+
+.stopContainer {
+  display: none;
+  /* flex-direction: row; */
+  width: 81px;
+  margin: 8px 15px 10px auto;
+  border: 1px solid #1E9FFF;
+  padding: 5px 15px;
+  border-radius: 24px;
+  cursor: pointer;
+  color: #1E9FFF;
+  background-color: #1E9FFF;
+  font-size: 14px;
+}
+
+.stopContainer div {
+  color: #ffffff;
+  margin-left: 5px;
+}
+
+
+.operatBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.operatBtn img {
+  width: 25px;
+  margin: 5px 0 5px 10px;
+  cursor: pointer;
+}
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip-image {
+  width: 1em;
+  height: 1em;
+}
+
+.tooltip-container::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: 124%;
+  /* 提示框在图像上方 */
+  left: 62%;
+  transform: translateX(-50%);
+  background-color: #222;
+  color: #fff;
+  padding: 0.5em;
+  border-radius: 0.2em;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.tooltip-container::before {
+  content: "";
+  position: absolute;
+  /* bottom: 100%; */
+  left: 62%;
+  top: -0.6em;
+  transform: translateX(-50%);
+  border-width: 0.4em;
+  border-style: solid;
+  border-color: #222 transparent transparent transparent;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 10;
+  font-size: 16px;
+}
+
+.tooltip-container:hover::after,
+.tooltip-container:hover::before {
+  opacity: 1;
+}
+
+.resourceCon {
+  width: 35%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  align-items: start;
+  border: 1px solid #DADBDA;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.fineName {
+  margin-left: 15px;
+  /* color: #06A8F5;  */
+  overflow-wrap: anywhere;
+}
+
+#tree {
+  overflow: auto;
+}
+
+.layui-col-md6 {
+  padding: 10px;
+  display: flex;
+}
+
+#knowledgeBaseManage {
+  /* margin: 4px 0 0 18px; */
+  margin: 14px 10px 0 auto;
+}
+
+.selectCon {
+  padding: 10px;
+  width: 30%;
+}
+
+.fileName {
+  margin-top: 10px;
+}
+
+.fileNameSearch {
+  margin-top: 11px;
+  margin-left: 10px;
+  height: 36px;
+  line-height: 36px;
+}
+
+#knowledgeBaseManage {
+  /* margin: 4px 0 0 18px; */
+  margin: 14px 10px 0 auto;
+}
+
+.selectCon {
+  padding: 10px;
+  width: 30%;
+}
+
+.fileName {
+  margin-top: 10px;
+}
+
+.knowlwdge_menu {
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
+  color: #666;
+  padding: 10px 0 0 4px;
+}
+
+.knowlwdge_menu_name {
+  cursor: pointer;
+  padding: 0 10px;
+  color: #1E9FFF;
+}
+
+.knowlwdge_menu_name img {
+  margin-top: -2px;
+}
+
+.spa {
+  line-height: 20px;
+}

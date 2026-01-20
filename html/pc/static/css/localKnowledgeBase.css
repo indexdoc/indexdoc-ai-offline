@@ -1,0 +1,118 @@
+.controller-container {
+    display: flex;
+    align-items: center;
+    /* padding: 20px 30px; */
+    /* background-color: #ffffff; */
+    /* border-radius: 8px; */
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
+    user-select: none;
+    /* 防止文本被选中 */
+}
+
+.status-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.status-text {
+    font-size: 14px;
+    color: #999;
+}
+
+/* 加载中的旋转动画 */
+.spinner {
+    display: none;
+    vertical-align: middle;
+    margin-left: 8px;
+    /* border: 2px solid #f3f3f3;
+        border-top: 2px solid #3498db;
+        border-radius: 50%; */
+    width: 16px;
+    height: 16px;
+    /* animation: spin 1s linear infinite; */
+}
+
+/* @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    } */
+
+/* --- 开关按钮样式 (调整为更小的高度) --- */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    /* 宽度略微减小 */
+    height: 18px;
+    /* 高度从34px减小到24px */
+    bottom: 2px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 18px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;   /* 原 18px */
+    width: 14px;
+    left: 2px;      /* 位置缩小 */
+    bottom: 2px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+    /* 开启时的颜色 */
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    transform: translateX(16px); 
+    /* 调整滑动距离以匹配新尺寸 */
+}
+
+/* 圆角滑块 */
+.slider.round {
+    border-radius: 24px;
+    /* 圆角半径与高度一致 */
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* 禁用状态 */
+.switch.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.switch.disabled input {
+    cursor: not-allowed;
+}
+
+.switch.disabled .slider {
+    cursor: not-allowed;
+}

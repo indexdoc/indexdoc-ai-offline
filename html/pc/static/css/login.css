@@ -1,0 +1,263 @@
+html body {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.title {
+    font-family: Source Han Sans;
+    font-size: 44rem;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #FFFFFF;
+    padding: 54rem 0 0 40rem;
+}
+
+.login {
+    display: flex;
+    flex-direction: row;
+    /* padding-top: 146rem; */
+}
+
+.logoImg {
+
+    margin-left: 20rem;
+}
+
+
+.logoImg img {
+    width: 681rem;
+    height: 681rem;
+    margin: 0 0 0 18%;
+}
+
+
+.loginCon {
+    /* width: 604rem; */
+    height: 472rem;
+    border-radius: 15rem;
+    opacity: 1;
+    background: #FFFFFF;
+    margin: 5% 0 0 20%;
+}
+
+.loginCon2 {
+    /* width: 504rem; */
+    height: 650rem;
+    border-radius: 15rem;
+    opacity: 1;
+    background: #FFFFFF;
+    margin: 3% 0 0 19%;
+}
+
+.loginConTit {
+    font-family: Source Han Sans;
+    font-size: 28rem;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #4A87D1;
+    margin: 44rem 0 0 47rem;
+}
+
+.loginConInput {
+    margin-top: 30rem;
+}
+
+.loginConInputName {
+    border-radius: 5rem;
+    opacity: 1;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    border: 1rem solid #E0E0E0;
+    width: 85%;
+    margin: 10rem auto;
+    height: 56rem;
+    display: flex;
+}
+
+.loginicon {
+    width: 30rem;
+    height: 30rem;
+}
+
+.loginConInputName img {
+    width: 29rem;
+    border-right: 1rem solod #E0E0E0;
+    margin: 13rem 0 0 13rem;
+}
+
+.split {
+    width: 1rem;
+    height: 30rem;
+    background-color: #E0E0E0;
+    margin: 13rem 22rem 0 22rem;
+}
+
+.loginConInputName input {
+    border: none;
+    width: 70%;
+    height: 36rem;
+    margin-top: 10rem;
+    font-size: 18rem;
+}
+
+input:focus {
+    outline: none;
+}
+
+::placeholder {
+    font-family: Source Han Sans;
+    font-size: 18rem;
+    font-weight: 350;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #B3B3B3;
+}
+
+.getCode {
+    width: 140rem;
+    height: 36rem;
+    margin: 10rem 5rem;
+    background-color: #4A87D1;
+    border-radius: 10rem;
+    font-family: Source Han Sans;
+    font-size: 18rem;
+    font-weight: 350;
+    line-height: 36rem;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #FFFFFF;
+    text-align: center;
+    cursor: pointer;
+}
+
+.register {
+    font-family: Source Han Sans;
+    font-size: 18rem;
+    font-weight: 350;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #358CF6;
+    text-align: right;
+    width: 85%;
+    margin: auto;
+    cursor: pointer;
+}
+
+.tips{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin: auto;
+}
+
+#errmsg{
+    font-family: Source Han Sans;
+    font-size: 18rem;
+    font-weight: 350;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: red;
+    text-align: left;
+}
+
+.loginBtn {
+    font-family: Source Han Sans;
+    font-size: 20rem;
+    font-weight: 350;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #FFFFFF;
+    background-color: #358CF6;
+    width: 80%;
+    /* height: 66rem; */
+    margin: 20rem auto;
+    border-radius: 25rem;
+    text-align: center;
+    line-height: 52rem;
+    cursor: pointer;
+    border: none;
+}
+
+
+.loginBtn2 {
+    font-family: Source Han Sans;
+    font-size: 20rem;
+    font-weight: 350;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #FFFFFF;
+    background-color: #358CF6;
+    width: 80%;
+    /* height: 66rem; */
+    margin: 30rem auto;
+    border-radius: 25rem;
+    text-align: center;
+    line-height: 52rem;
+    cursor: pointer;
+}
+
+.loginConImg {
+    width: 135rem;
+    height: 135rem;
+    background-color: #ffffff;
+    margin: auto;
+    margin-top: -70rem;
+    border-radius: 50%;
+}
+
+.loginConImg img {
+    width: 135rem;
+    height: 135rem;
+}
+
+.registerTitle {
+    font-family: Source Han Sans;
+    font-size: 28rem;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #4A87D1;
+    /* width: 85%; */
+    text-align: center;
+    /* margin: 14rem 0 0 47rem; */
+    cursor: pointer;
+}
+
+#refreshCaptcha {
+    width: 140rem;
+    height: 36rem;
+    margin:8rem 5rem 0 13rem;
+    cursor: pointer;
+    border: 1rem solid #e6e6e6;
+}

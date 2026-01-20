@@ -1,0 +1,233 @@
+.chat-container {
+    min-width: 1065px;
+    height: 100vh;
+
+}
+
+.chat-container2 {
+    width: 40%;
+    background-color: #f6f6ff;
+    border-radius: 20px;
+}
+
+.upload {
+    width: 90%;
+    height: 184px;
+    background-color: #ffffff;
+    margin: 30px auto;
+    box-sizing: border-box;
+    border: 1px dashed #0174FF;
+    border-radius: 5px;
+}
+
+.uploadImg {
+    width: 83px;
+    height: 83px;
+    background-color: #A3BBFB;
+    border-radius: 50%;
+    margin: 18px auto;
+}
+
+.uploadImg img {
+    width: 43px;
+    margin: 19px 0 0 19px;
+}
+
+.uploadTxt {
+    width: 100%;
+    text-align: center;
+    font-family: Source Han Sans;
+    font-size: 14px;
+    font-weight: 350;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz"auto;
+    font-feature-settings: "kern"on;
+    color: #0174FF;
+}
+
+.chat-container3{
+    width: 59%;
+    margin-left: 0.5%;
+    background-color: #f6f6ff;
+    border-radius: 20px;
+}
+
+
+.chat-messages {
+    padding: 10px 37px;
+    overflow-y: auto;
+    height: 70vh;
+}
+
+
+.input-container {
+    display: flex;
+    /* background-color: #f2f2f2; */
+    position: fixed;
+    bottom: 2vh;
+    width: 80%;
+    border-radius: 5px;
+}
+
+
+.textareaCon {
+    padding: 0 37px;
+    display: flex;
+    width: 100%;
+}
+
+textarea {
+    width: 88%;
+    height: 203px;
+    margin: 0 20px;
+    padding: 10px 120px 0 5px;
+    border: 1px solid #D1CEE6;
+    border-radius: 10px;
+    outline: none;
+    resize: none;
+    font: inherit;
+    /* 继承父元素的字体样式 */
+    line-height: inherit;
+    /* 继承父元素的行高 */
+    background-color: transparent;
+    /* 设置背景为透明 */
+    overflow: auto;
+    /* 如果需要滚动条，可设置为 auto */
+    /* 其他样式根据需求添加 */
+}
+
+.sendImg {
+    position: absolute;
+    right: 4%;
+    top: 49%;
+    width: 108px;
+    height: 108px;
+    cursor: pointer;
+}
+
+.stopImg {
+    position: absolute;
+    right: 4%;
+    top: 64%;
+    width: 58px;
+    height: 58px;
+    display: none;
+    cursor: pointer;
+}
+
+
+.send-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+}
+
+
+.messageImg {
+    width: 80px;
+    height: 80px;
+    background-color: #DFEEFF;
+    border-radius: 50%;
+}
+
+.messageImg img {
+    width: 80px;
+    height: 80px;
+}
+
+
+.chat-messages {
+    padding: 10px 37px;
+    overflow-y: auto;
+    height: 70vh;
+}
+
+
+.message {
+    margin: 30px 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.message-content {
+    background-color: #F4F3FC;
+    padding: 24px 25px;
+    max-width: 70%;
+    margin: 0 14px 0 14px;
+    border-radius: 10px;
+    opacity: 1;
+    font-family: 思源黑体;
+    font-weight: 400;
+    font-size: 20px;
+    font-variation-settings: "opsz"auto;
+    color: #3D3D3D;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+.user-message {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+#filename{
+    background-color: #F4F3FC;
+    padding: 11px 25px;
+    max-width: 70%;
+    margin: 0 14px 0 14px;
+    border-radius: 10px;
+    opacity: 1;
+    font-family: 思源黑体;
+    font-weight: 400;
+    font-size: 20px;
+    font-variation-settings: "opsz"auto;
+    color: #3D3D3D;
+}
+
+
+
+.fileName {
+    margin-top: 10px;
+}
+
+.fileNameSearch {
+    margin-top: 11px;
+    margin-left: 10px;
+    height: 36px;
+    line-height: 36px;
+}
+
+.knowlwdge_menu {
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    color: #666;
+    padding: 10px 0 0 4px;
+}
+
+.knowlwdge_menu_name {
+    cursor: pointer;
+    padding: 0 10px;
+    color: #1E9FFF;
+}
+
+.knowlwdge_menu_name img {
+    margin-top: -2px;
+}
+
+
+.spa {
+    line-height: 20px;
+}
