@@ -1,0 +1,7 @@
+Package: antiword
+Version: 0.37
+Date: 04.03.2015 09:39:54 GMT
+Build flags: 
+Time needed: 0 minutes, 13 seconds
+Compiler: gcc.exe (x86_64-posix-seh-rev1, Built by MinGW-W64 project) 4.9.2
+Host: x86_64-w64-mingw32

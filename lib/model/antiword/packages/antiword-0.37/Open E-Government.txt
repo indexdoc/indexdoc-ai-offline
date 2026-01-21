@@ -1,0 +1,7 @@
+$Id: info.txt 568 2013-02-25 21:48:20Z gerrit-albrecht $
+
+Open E-Government is a free and open source E-Government suite.
+
+Please visit the homepage www.open-egov.de for information
+about the aims, the applications and much more.
+
