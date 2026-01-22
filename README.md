@@ -31,16 +31,25 @@ webview.start(debug=True) #debug=False 即可关闭调试模式
 ```
 
 ## 📝 使用示例
-点击左侧"关联本地目录"按钮可以选择本地的文件进行关联。点击右侧"开启新对话"可开启新对话。历史对话下方列表记录了用户的问答记录。
+**点击左侧"关联本地目录"按钮可以选择本地的文件进行关联。点击右侧"开启新对话"可开启新对话。历史对话下方列表记录了用户的问答记录。**
 ![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/mainPage.png)
 
-在左侧选中文档(文件夹)之后，即可提问，ai模型会根据所提出的问题和所选中的文档进行准确合适的回答。
+**在左侧选中文档(文件夹)之后，即可提问，ai模型会根据所提出的问题和所选中的文档进行准确合适的回答。**
 ![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/mainPage2.png)
 
-在左侧的搜索框中，可对已添加的文档进行搜索。
+**在左侧的搜索框中，可对已添加的文档进行搜索。**
 ![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/search.png)
 
-点击右侧历史记录 即可回显相应历史记录的对话内容。
+**对目录右键后即可进行 打开目录、刷新、 移出知识库操作**
+![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/right-clickThe Folder.png)
+
+**对文件右键后即可进行 打开文件、刷新、操作**
+![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/right-clickThe File.png)
+
+**对ai模型的回答 可以进行 复制markdown格式文本、导出Word文档、导出pdf文档、复制纯文本的操作**
+![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/copyChat.png)
+
+**点击右侧历史记录 即可回显相应历史记录的对话内容。**
 ![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/history.png)
 
 ### 常见问题
