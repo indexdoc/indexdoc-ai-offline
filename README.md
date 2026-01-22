@@ -34,10 +34,10 @@ webview.start(debug=True) #debug=False 即可关闭调试模式
 点击左侧"关联本地目录"按钮可以选择本地的文件进行关联。点击右侧"开启新对话"可开启新对话。历史对话下方列表记录了用户的问答记录。
 ![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/mainPage.png)
 
-在左侧选中文档(文件夹)之后，即可向提问，ai模型会根据所提出的问题和所选中的文档进行准确合适的回答。
+在左侧选中文档(文件夹)之后，即可提问，ai模型会根据所提出的问题和所选中的文档进行准确合适的回答。
 ![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/mainPage2.png)
 
-在左侧的输入框中，可对已添加的文档进行搜索。
+在左侧的搜索框中，可对已添加的文档进行搜索。
 ![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/search.png)
 
 点击右侧历史记录 即可回显相应历史记录的对话内容。
