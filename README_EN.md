@@ -46,9 +46,11 @@ webview.start(debug=True) # Set debug=False to turn off debug mode
 ![Search](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/search.png)
 
 **Right-click a directory to perform operations such as "Open Directory", "Refresh", and "Remove from Knowledge Base"**
+
 ![Right-click Folder](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/right-clickTheFolder.png)
 
 **Right-click a file to perform operations such as "Open File" and "Refresh"**
+
 ![Right-click File](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/right-clickTheFile.png)
 
 **You can click the button during file loading to stop the loading process**
