@@ -48,6 +48,9 @@ webview.start(debug=True) #debug=False 即可关闭调试模式
 
 ![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/right-clickTheFile.png)
 
+**文件加载时可点击正在加载后按钮停止加载**
+![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/stopUpload.png)
+
 **对ai模型的回答 可以进行 复制markdown格式文本、导出Word文档、导出pdf文档、复制纯文本的操作**
 ![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/copyChat.png)
 
