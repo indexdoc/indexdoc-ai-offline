@@ -41,10 +41,10 @@ webview.start(debug=True) #debug=False 即可关闭调试模式
 ![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/search.png)
 
 **对目录右键后即可进行 打开目录、刷新、 移出知识库操作**
-![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/right-clickThe Folder.png)
+![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/right-clickTheFolder.png)
 
 **对文件右键后即可进行 打开文件、刷新、操作**
-![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/right-clickThe File.png)
+![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/right-clickTheFile.png)
 
 **对ai模型的回答 可以进行 复制markdown格式文本、导出Word文档、导出pdf文档、复制纯文本的操作**
 ![主页2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/copyChat.png)
