@@ -21,7 +21,13 @@
 ```bash
 https://github.com/indexdoc/indexdoc-ai-offline.git
 ```
+```bash
+#快速安装依赖库
+pip install -r requirements.txt
 
+# 阿里镜像源
+pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+```
 ### 数据库文件目录
 ```bash
 database/default.duck

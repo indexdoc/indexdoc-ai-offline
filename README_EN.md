@@ -21,7 +21,13 @@ The features include local file upload, AI Q&A based on selected files, and savi
 ```bash
 https://github.com/indexdoc/indexdoc-ai-offline.git
 ```
+```bash
+# Install dependencies quickly
+pip install -r requirements.txt
 
+# Use Alibaba Cloud PyPI mirror (faster installation)
+pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+```
 ### Database File Directory
 ```bash
 database/default.duck
