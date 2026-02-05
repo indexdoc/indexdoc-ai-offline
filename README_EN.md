@@ -43,30 +43,30 @@ webview.start(debug=True) # Set debug=False to turn off debug mode
 
 ## 📝 Usage Example
 **Click the "Associate Local Directory" button on the left to select local files for association. Click "Start New Conversation" on the right to initiate a new dialogue. The list below the historical conversation records the user's Q&A history.**
-![Main Page](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/mainPage.png)
+![Main Page](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/README/mainPage.png)
 
 **After selecting documents (folders) on the left, you can ask questions, and the AI model will provide accurate and appropriate answers based on the questions and the selected documents.**
-![Main Page 2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/mainPage2.png)
+![Main Page 2](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/README/mainPage2.png)
 
 **In the search box on the left, you can search for added documents.**
-![Search](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/search.png)
+![Search](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/README/search.png)
 
 **Right-click a directory to perform operations such as "Open Directory", "Refresh", and "Remove from Knowledge Base"**
 
-![Right-click Folder](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/right-clickTheFolder.png)
+![Right-click Folder](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/README/right-clickTheFolder.png)
 
 **Right-click a file to perform operations such as "Open File" and "Refresh"**
 
-![Right-click File](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/right-clickTheFile.png)
+![Right-click File](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/README/right-clickTheFile.png)
 
 **You can click the button during file loading to stop the loading process**
-![Stop Upload](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/stopUpload.png)
+![Stop Upload](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/README/stopUpload.png)
 
 **For the AI model's answers, you can perform operations such as copying Markdown-formatted text, exporting to Word document, exporting to PDF document, and copying plain text**
-![Copy Chat](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/copyChat.png)
+![Copy Chat](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/README/copyChat.png)
 
 **Click historical records on the right to display the corresponding historical conversation content.**
-![History](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/history.png)
+![History](https://github.com/indexdoc/indexdoc-ai-offline/raw/master/README/history.png)
 
 ### Frequently Asked Questions
 1. **Documents appear in gray font and marked as "unsupported" after addition**: If the added documents are corrupted or have incorrect encoding formats, they will appear in gray font and marked as "unsupported" after addition.
