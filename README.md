@@ -6,7 +6,7 @@
 # 本地文档AI助手
 本地文档AI助手，是一款轻量、高效的本地文档AI交互工具，以客户端的形式呈现，专注于解决「本地文档精准问答」需求，让你无需上传文档至第三方平台，即可基于自有文件内容向AI提问，快速提取关键信息、解读文档细节、总结核心内容。利用AI技术实现人与文档智能交互，通过自然对话方式向文档提问，精准获取相关信息与答案。
 
-[![Python Version](https://img.shields.io/badge/python-3.10+-green.svg)](https://www.python.org/)  [![GitHub Stars](https://img.shields.io/github/stars/indexdoc/indexdoc-ai-offline?style=social)](https://github.com/indexdoc/indexdoc-ai-offline.git) 
+[![Python Version](https://img.shields.io/badge/python-3.10+-green.svg)](https://www.python.org/)  [![GitHub Stars](https://img.shields.io/github/stars/indexdoc/indexdoc-ai-offline?style=social)](https://github.com/indexdoc/indexdoc-ai-offline.git) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## ✨ 核心功能
 

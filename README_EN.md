@@ -6,7 +6,7 @@
 # Local Document AI Assistant
 Local Document AI Assistant is a lightweight and efficient local document AI interaction tool presented as a client application. It focuses on solving the need for **accurate Q&A on local documents**, allowing you to ask AI questions based on your own file content without uploading documents to third-party platforms. It enables quick extraction of key information, interpretation of document details, and summarization of core content. Leveraging AI technology to realize intelligent interaction between humans and documents, you can ask questions about documents through natural dialogue and accurately obtain relevant information and answers.
 
-[![Python Version](https://img.shields.io/badge/python-3.10+-green.svg)](https://www.python.org/)  [![GitHub Stars](https://img.shields.io/github/stars/indexdoc/indexdoc-ai-offline?style=social)](https://github.com/indexdoc/indexdoc-ai-offline.git) 
+[![Python Version](https://img.shields.io/badge/python-3.10+-green.svg)](https://www.python.org/)  [![GitHub Stars](https://img.shields.io/github/stars/indexdoc/indexdoc-ai-offline?style=social)](https://github.com/indexdoc/indexdoc-ai-offline.git) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## ✨ Core Features
 
